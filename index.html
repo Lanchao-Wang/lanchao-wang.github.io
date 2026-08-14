@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <h1>Lanchao Wang <span class="chinese-name">（王岚超）</span></h1>
+  <title>Lanchao Wang</title>
 
   <style>
     body {
@@ -19,11 +18,33 @@
       background-color: #fff;
     }
 
+    nav {
+      margin-bottom: 35px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+      margin-right: 25px;
+      font-size: 18px;
+      color: #1769aa;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    nav a.active {
+      color: #222;
+      font-weight: bold;
+    }
+
     header {
       display: flex;
       align-items: center;
-      gap: 35px;
-      margin-bottom: 40px;
+      gap: 40px;
+      margin-bottom: 45px;
     }
 
     .profile-photo {
@@ -34,7 +55,7 @@
     }
 
     h1 {
-      margin-bottom: 5px;
+      margin: 0;
       font-size: 36px;
     }
 
@@ -44,25 +65,12 @@
       border-bottom: 1px solid #ccc;
     }
 
-    a {
-      color: #1769aa;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
     ul {
       padding-left: 24px;
     }
 
     li {
-      margin-bottom: 12px;
-    }
-
-    .links a {
-      margin-right: 15px;
+      margin-bottom: 10px;
     }
 
     @media (max-width: 650px) {
@@ -81,31 +89,27 @@
 
 <body>
 
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="publications.html">Publications</a>
+  </nav>
+
   <header>
-    <img src="photo.jpg" alt="Your Name" class="profile-photo">
+    <img src="photo.jpg" alt="Lanchao Wang" class="profile-photo">
 
     <div>
-      <h1>Your Name</h1>
-
-
-
-      <p class="links">
-        <a href="mailto:your-email@example.com">Email</a>
-        <a href="https://arxiv.org/">arXiv</a>
-        <a href="https://scholar.google.com/">Google Scholar</a>
-        <a href="cv.pdf">CV</a>
-      </p>
+      <h1>Lanchao Wang <span class="chinese-name">（王岚超）</span></h1>
     </div>
   </header>
 
- <h2>About Me</h2>
+  <h2>About Me</h2>
 
-<p>
-  I am a jointly supervised PhD student at Nanjing University and IBS ECOPRO,
-  under the supervision of Professors Yaojun Chen and Hong Liu. I am currently
-  studying in South Korea. I received my bachelor's degree from Shandong University
-  in 2021, with Professor Guanghui Wang as my thesis advisor.
-</p>
+  <p>
+    I am a jointly supervised PhD student at Nanjing University and IBS ECOPRO,
+    under the supervision of Professors Yaojun Chen and Hong Liu. I am currently
+    studying in South Korea. I received my bachelor's degree from Shandong University
+    in 2021, with Professor Guanghui Wang as my thesis advisor.
+  </p>
 
   <h2>Research Interests</h2>
 
@@ -115,16 +119,6 @@
     <li>Probabilistic combinatorics</li>
     <li>Directed graphs</li>
   </ul>
-
-
-
-  <h2>Contact</h2>
-
-  <p>
-    Department of Mathematics<br>
-    Your University<br>
-    City, Country
-  </p>
 
 </body>
 </html>
