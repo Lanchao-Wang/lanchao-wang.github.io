@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Publications - Lanchao Wang</title>
+
+  <style>
+    body {
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 0 25px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: #222;
+      background-color: #fff;
+    }
+
+    nav {
+      margin-bottom: 35px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+      margin-right: 25px;
+      font-size: 18px;
+      color: #1769aa;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    nav a.active {
+      color: #222;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 35px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    a {
+      color: #1769aa;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ol {
+      padding-left: 26px;
+    }
+
+    li {
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="publications.html" class="active">Publications</a>
+  </nav>
+
+  <h1>Publications</h1>
+
+  <h2>2026+</h2>
+
+  <ol>
+
+    <li>
+      <a href="https://arxiv.org/abs/2608.09895">
+        <strong>Superlinear Lower Bounds for Monochromatic Path Partitions</strong>
+      </a><br>
+      with Heng Li.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2608.09728">
+        <strong>Prescribed-order subdigraphs with large minimum out-degree</strong>
+      </a><br>
+      with Bin Chen.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2607.28295">
+        <strong>The Turán number of the Cartesian product of trees via star-flip</strong>
+      </a><br>
+      with Caihong Yang.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2607.06551">
+        <strong>Tight Staircase Bounds for Cyclic Subsets below Dirac's Threshold</strong>
+      </a><br>
+      with Hong Liu, Mengyuan Niu, and Zhifei Yan.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2606.24863">
+        <strong>Structural Reductions for Monochromatic Matchings and Ramsey Tilings</strong>
+      </a><br>
+      with Hong Liu, Maksim Turevskii, and Zhifei Yan.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2606.19851">
+        <strong>An exact robust Ramsey theorem for matchings</strong>
+      </a><br>
+      with Mengyuan Niu.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2606.15063">
+        <strong>Constructor--Blocker games forbidding even cycles</strong>
+      </a><br>
+      with Zhifei Yan.
+    </li>
+
+    <li>
+      <a href="https://arxiv.org/abs/2604.25250">
+        <strong>Triangle packings in randomly perturbed graphs</strong>
+      </a><br>
+      with Xinbu Cheng, Hong Liu, and Zhifei Yan.
+    </li>
+
+  </ol>
+
+  <h2>2023</h2>
+
+  <ol>
+
+    <li>
+      <a href="https://doi.org/10.1002/jcd.21919">
+        <strong>Generalizations of some Nordhaus–Gaddum-type results on spectral radius</strong>
+      </a><br>
+      with Junying Lu and Yaojun Chen.<br>
+      <em>Journal of Combinatorial Designs</em> 31 (2023), 701–712.
+    </li>
+
+    <li>
+      <a href="https://doi.org/10.1016/j.disc.2023.113499">
+        <strong>Connectedness of friends-and-strangers graphs of complete bipartite graphs and others</strong>
+      </a><br>
+      with Junying Lu and Yaojun Chen.<br>
+      <em>Discrete Mathematics</em> 346 (2023), 113499.
+    </li>
+
+    <li>
+      <a href="https://doi.org/10.1007/s00373-023-02653-9">
+        <strong>The Connectedness of the Friends-and-Strangers Graph of a Lollipop and Others</strong>
+      </a><br>
+      with Yaojun Chen.<br>
+      <em>Graphs and Combinatorics</em> 39 (2023), 55.
+    </li>
+
+    <li>
+      <a href="https://doi.org/10.1016/j.disc.2022.113266">
+        <strong>Connectivity of friends-and-strangers graphs on random pairs</strong>
+      </a><br>
+      with Yaojun Chen.<br>
+      <em>Discrete Mathematics</em> 346 (2023), 113266.
+    </li>
+
+  </ol>
+
+</body>
+</html>
