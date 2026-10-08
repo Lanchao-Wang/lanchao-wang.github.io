@@ -1,4 +1,4 @@
-# Research manuscripts and papers
+# Research manuscripts and drafts
 
 This repository hosts a research webpage and selected manuscripts in graph theory, Ramsey theory, and probabilistic combinatorics.
 
@@ -26,9 +26,9 @@ an external compression theorem from OpenAI's formalized SharpLogRamsey
 work, an occupancy-removal argument, and projection-closed covering
 families for a multicolour entropy induction.
 
-[Read the manuscript description and keywords](./papers/ramsey_4a_t_20261008/) ·
-[Read the detailed research notes](./papers/ramsey_4a_t_20261008/README.md) ·
-[LaTeX manuscript](./papers/ramsey_4a_t_20261008/ramsey_4a_t_blackbox_20261008.tex)
+[Read the manuscript description and keywords](./drafts/ramsey_4a_t_20261008/) ·
+[Read the detailed research notes](./drafts/ramsey_4a_t_20261008/README.md) ·
+[LaTeX manuscript](./drafts/ramsey_4a_t_20261008/ramsey_4a_t_blackbox_20261008.tex)
 
 **Status:** Preliminary manuscript, revised October 8, 2026; independent
 verification pending. The external compression theorem is cited, not
