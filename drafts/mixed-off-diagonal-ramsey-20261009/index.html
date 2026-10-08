@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>r(s1,...,sk,t) | Common Independent Sets in K_s-Free Graphs | Ramsey Theory Draft</title>
+  <meta name="description" content="Research manuscript on multicolour off-diagonal Ramsey numbers r(s1,...,sk,t), common independent sets in K_s-free graphs, mixed forbidden clique sizes, entropy compression and rectangle occupancy.">
+  <meta name="keywords" content="off-diagonal Ramsey numbers, multicolour Ramsey numbers, multicolor Ramsey numbers, generalized Ramsey numbers, mixed Ramsey numbers, r(s1,...,sk,t), r(3,4,t), r(4,4,t), r(3,4,5,t), K_s-free graphs, common independent sets, entropy compression, orthogonal rectangles, rectangle occupancy, triangle-free graphs, projection-closed covering families">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lanchao-wang.github.io/drafts/mixed-off-diagonal-ramsey-20261009/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Common Independent Sets in Graphs with Different Forbidden Cliques">
+  <meta property="og:description" content="Preliminary draft on multicolour off-diagonal Ramsey numbers r(s1,...,sk,t) and entropy compression for graphs forbidding different cliques.">
+  <meta property="og:url" content="https://lanchao-wang.github.io/drafts/mixed-off-diagonal-ramsey-20261009/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Common independent sets in K_{s_1}-free, ..., K_{s_k}-free graphs",
+    "description": "Preliminary research manuscript on mixed multicolour off-diagonal Ramsey numbers and common independent sets in graphs with different forbidden clique sizes.",
+    "dateModified": "2026-10-09",
+    "isAccessibleForFree": true,
+    "url": "https://lanchao-wang.github.io/drafts/mixed-off-diagonal-ramsey-20261009/",
+    "keywords": ["off-diagonal Ramsey numbers","multicolour Ramsey numbers","r(s1,...,sk,t)","r(3,4,t)","r(4,4,t)","K_s-free graphs","common independent sets","entropy compression","orthogonal rectangles","projection-closed covering families"]
+  }
+  </script>
+  <style>
+    body {max-width:850px;margin:50px auto;padding:0 25px;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1.65;color:#222;background:#fff}
+    nav {margin-bottom:32px;padding-bottom:10px;border-bottom:1px solid #ddd}
+    nav a {margin-right:22px}
+    a {color:#1769aa;text-decoration:none}
+    a:hover {text-decoration:underline}
+    h1 {font-size:30px;line-height:1.3;margin-bottom:6px}
+    h2 {font-size:21px;margin-top:34px;padding-bottom:6px;border-bottom:1px solid #ddd}
+    .muted {color:#555}
+    .formula {font:20px Georgia,"Times New Roman",serif;text-align:center;margin:25px 0;overflow-wrap:anywhere}
+    .keywords {font-size:16px;color:#444}
+    footer {border-top:1px solid #ddd;padding-top:14px;margin-top:42px}
+    @media(max-width:600px){h1{font-size:25px}.formula{font-size:17px}}
+  </style>
+</head>
+<body>
+  <nav><a href="../../index.html">Home</a><a href="../../publications.html">Publications</a></nav>
+  <main>
+    <article>
+      <h1>Common Independent Sets in K<sub>s<sub>1</sub></sub>-Free, …, K<sub>s<sub>k</sub></sub>-Free Graphs</h1>
+      <p class="muted">Research draft · source revised October 8, 2026 · preliminary and unrefereed</p>
+      <p>
+        <a href="common_independent_sets_mixed_cliques.tex">Read the LaTeX manuscript</a> ·
+        <a href="https://github.com/Lanchao-Wang/lanchao-wang.github.io/blob/main/drafts/mixed-off-diagonal-ramsey-20261009/README.md">Detailed overview, proof outline and keywords</a>
+      </p>
+      <h2>Overview</h2>
+      <p>The manuscript considers <strong>multicolour off-diagonal Ramsey numbers</strong>
+      <strong>r(s<sub>1</sub>,…,s<sub>k</sub>,t)</strong>, with a fixed number of
+      colours and fixed forbidden clique sizes <strong>s<sub>i</sub> ≥ 3</strong>.
+      Equivalently, it studies <strong>common independent sets</strong> in a family of
+      graphs where the i-th graph is <strong>K<sub>s<sub>i</sub></sub>-free</strong>.</p>
+      <h2>Main result</h2>
+      <p>Put <strong>S = ∑<sub>i=1</sub><sup>k</sup>(s<sub>i</sub> − 2)</strong>.
+      For fixed parameters and every ε &gt; 0, the draft claims
+      a constant c &gt; 0 with</p>
+      <p class="formula">r(s<sub>1</sub>,…,s<sub>k</sub>,t) ≥ c t<sup>S+1</sup>/(log t)<sup>S+ε</sup>.</p>
+      <p>Combining with the cited He–Wigderson upper bound gives the claimed
+      logarithmic-exponent asymptotic</p>
+      <p class="formula">r(s<sub>1</sub>,…,s<sub>k</sub>,t) = t<sup>S+1</sup>/(log t)<sup>S+o(1)</sup>.</p>
+      <p>Special cases include <strong>r(3,4,t)</strong> and <strong>r(4,4,t)</strong>.
+      The parameter k and the clique sizes are fixed as t tends to infinity.</p>
+      <h2>Methods and previous work</h2>
+      <p>The argument uses Bradač's ordered projective flag construction,
+      entropy bounds on forward independent tuples, and an external
+      single-colour compression theorem from
+      <a href="https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/SharpRamsey">OpenAI's formal SharpLogRamsey source</a>.
+      Rectangle peeling removes an orthogonal-rectangle occupancy
+      restriction for the desired covering reduction. Projection-closed
+      covering families support a multicolour induction.
+      Colours forbidding triangles are handled using an independent-set
+      counting theorem of Andrades, Campos and Morris.</p>
+      <h2>Keywords</h2>
+      <p class="keywords">Off-diagonal Ramsey numbers; mixed Ramsey numbers; multicolour Ramsey numbers;
+      multicolor Ramsey numbers; generalized Ramsey theory; r(s1,...,sk,t);
+      r(3,4,t); r(4,4,t); K_s-free graphs; K4-free graphs; common independent sets;
+      finite projective geometry; ordered flag digraphs; Bradač construction;
+      Shannon entropy; entropy compression; one-colour compression;
+      orthogonal rectangles; rectangle occupancy; triangle-free graphs;
+      projection-closed covering families; probabilistic combinatorics.</p>
+      <h2>Status and AI assistance</h2>
+      <p>This is a preliminary manuscript awaiting independent verification;
+      the cited external compression theorem has not been reproved here.
+      This manuscript was produced by GPT-6 under the author's guidance.</p>
+    </article>
+  </main>
+  <footer><a href="../../publications.html">Back to publications</a></footer>
+</body>
+</html>

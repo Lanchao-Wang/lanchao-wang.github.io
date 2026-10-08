@@ -27,8 +27,8 @@
 \newcommand{\src}[1]{\texttt{\detokenize{#1}}}
 \newcommand{\oairoot}{https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/Combinatorics/SharpRamsey/}
 \newcommand{\source}[2]{\href{\oairoot#1}{\src{#2}}}
-\hypersetup{pdftitle={Common independent sets in a fixed number of K4-free graphs}}
-\title{Common independent sets in $a$ $K_4$-free graphs}
+\hypersetup{pdftitle={Common independent sets in graphs with different forbidden cliques}}
+\title{Common independent sets in $K_{s_1}$-free, $\ldots$, $K_{s_k}$-free graphs}
 \author{}
 \date{}
 
@@ -38,42 +38,54 @@
 
 \begin{abstract}
 Using the single-colour compression theorem in OpenAI's formal source,
-we prove that, for every fixed integer $a\ge1$ and every $\eps>0$,
-$r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)
-\ge c_{a,\eps}t^{2a+1}/(\log t)^{2a+\eps}$.
+we prove that, for every fixed integer $k\ge1$, fixed integers
+$s_1,\ldots,s_k\ge3$, and every $\eps>0$,
+$r(s_1,\ldots,s_k,t)
+\ge c_{\boldsymbol{s},\eps}t^{S+1}/(\log t)^{S+\eps}$,
+where $\boldsymbol{s}=(s_1,\ldots,s_k)$ and
+$S=\sum_{i=1}^k(s_i-2)$.
 Together with the upper bound of He--Wigderson, this determines the
 logarithmic exponent. We use Brada\v{c}'s ordered flag construction.
 A rectangle-peeling argument removes the occupancy assumption from the
 quoted compression theorem, and projection-closed covering families
 allow the resulting reduction to be iterated across the colours.
+Triangle-free colours are handled by the independent-set count of
+Andrades--Campos--Morris, applied uniformly over the retained lengths.
 The external theorem, its specialization, and the additional arguments
 are stated separately.
 \end{abstract}
 
 \section{The construction}
 
-Fix an integer $a\ge1$. The Ramsey number
-$r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)$ is the least $N$
-such that every $(a+1)$-colouring of $E(K_N)$ contains a $K_4$ in one
-of the first $a$ colours, or a $K_t$ in colour $a+1$.
+Fix an integer $k\ge1$ and integers $s_1,\ldots,s_k\ge3$, and write
+$\boldsymbol{s}=(s_1,\ldots,s_k)$ and $S=\sum_{i=1}^k(s_i-2)$.
+The Ramsey number $r(s_1,\ldots,s_k,t)$ is the least $N$
+such that every $(k+1)$-colouring of $E(K_N)$ contains a
+$K_{s_i}$ in colour $i$ for some $1\le i\le k$, or a $K_t$
+in colour $k+1$.
 
 \begin{theorem}\label{thm:main}
-For every fixed integer $a\ge1$ and every $\eps>0$, there is a constant
-$c_{a,\eps}>0$ such that, for all sufficiently large integers $t$,
+For every fixed integer $k\ge1$, fixed integers $s_1,\ldots,s_k\ge3$,
+and every $\eps>0$, there is a constant
+$c_{\boldsymbol{s},\eps}>0$ such that, for all sufficiently large integers $t$,
 \[
- r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)
- \ge c_{a,\eps}\frac{t^{2a+1}}{(\log t)^{2a+\eps}}.
+ r(s_1,\ldots,s_k,t)
+ \ge c_{\boldsymbol{s},\eps}\frac{t^{S+1}}{(\log t)^{S+\eps}}.
 \]
 Consequently,
-$r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)
-=t^{2a+1}/(\log t)^{2a+o(1)}$ as $t\to\infty$.
+$r(s_1,\ldots,s_k,t)=t^{S+1}/(\log t)^{S+o(1)}$ as $t\to\infty$.
 \end{theorem}
+
+A parameter $s_i=2$ may be deleted. If all the small parameters
+are $2$, the Ramsey number equals $t$.
 
 The upper bound used here is the unconditional estimate in
 He--Wigderson~\cite[Appendix~B]{HW}.
 For the lower bound, our external compression input is
 \source{Marking/SelectedStep.lean}{eventually_selected_step}
-in the formal source~\cite{OAI}, specialized to vector dimension four.
+in the formal source~\cite{OAI}, specialized to each fixed vector
+dimension $s_i\ge4$. The colours with $s_i=3$ use
+\cite[Theorem~1.3]{ACM}, as detailed in Section~\ref{sec:triangles}.
 We state this input in Section~\ref{sec:compression}, together with
 its source notation and hypotheses, before deriving the covering
 estimate used in the proof. We do not reprove the external compression
@@ -83,13 +95,14 @@ All logarithms are natural. For a nonnegative integer $n$, write
 $[n]=\{1,\ldots,n\}$, with $[0]=\emptyset$.
 Constants may depend on fixed parameters, but not on $q$.
 
-Let $q$ be prime, and recall that $PG(3,q)$ is the set of
-one-dimensional subspaces of $\Fq^4$. For $a,b\in PG(3,q)$,
+For the one-colour arguments, fix an integer $d\ge4$.
+Let $q$ be prime, and recall that $PG(d-1,q)$ is the set of
+one-dimensional subspaces of $\Fq^d$. For $a,b\in PG(d-1,q)$,
 we write $a\perp b$ if their nonzero representative vectors have
 zero dot product. This condition does not depend on the representatives.
-Let $D=D^*(3,q)$ be the digraph introduced by Brada\v{c}
+Let $D=D^*(d-1,q)$ be the digraph introduced by Brada\v{c}
 \cite[Section~2.5]{Bradac}. Its vertex set is
-$V(D)=\{(a,b)\in PG(3,q)^2:a\perp b\}$,
+$V(D)=\{(a,b)\in PG(d-1,q)^2:a\perp b\}$,
 and there is an arc from $(a,b)$ to $(a',b')$ if and only if
 $a\perp b'$ and $a'\not\perp b$.
 
@@ -101,7 +114,7 @@ An ordered tuple $(x_1,\ldots,x_m)$ of vertices of $D$,
 where repetitions are allowed, is called \emph{forward independent}
 if there is no arc from $x_i$ to $x_j$ whenever $i<j$.
 
-For each subspace $U\le\Fq^4$, let $U^\perp$ denote its
+For each subspace $U\le\Fq^d$, let $U^\perp$ denote its
 orthogonal complement, and define
 $R(U)=\{(a,b)\in V(D):a\subseteq U^\perp,\ b\subseteq U\}$.
 We call these sets \emph{orthogonal rectangles}, using the terminology
@@ -111,7 +124,7 @@ of the compression framework in~\cite{OAI}.
 The following properties hold.
 \begin{enumerate}
 \item[(i)] For every positive integer $N$ and every map
-$\phi:[N]\to V(D)$, the graph $G_\phi$ is $K_4$-free.
+$\phi:[N]\to V(D)$, the graph $G_\phi$ is $K_d$-free.
 
 \item[(ii)] For $u_1<\cdots<u_m$ in $[N]$, the set
 $\{u_1,\ldots,u_m\}$ is independent in $G_\phi$ if and only if
@@ -125,45 +138,52 @@ $a_j\perp b_i$.
 independent tuple is forward independent.
 
 \item[(iv)] Writing $v=|V(D)|$, we have, for every subspace
-$U\le\Fq^4$,
+$U\le\Fq^d$,
 \begin{equation}\label{eq:geometry}
- q^5\le v\le4q^5,\qquad
- |R(U)|\le4q^2,\qquad
- |\{U:U\le\Fq^4\}|\le q^{16}.
+ q^{2d-3}\le v\le4q^{2d-3},\qquad
+ |R(U)|\le4q^{d-2},\qquad
+ |\{U:U\le\Fq^d\}|\le q^{d^2}.
 \end{equation}
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-By \cite[Lemma~2.11, with parameter $3$]{Bradac}, $D$ contains
-no transitive tournament on four vertices.
-If $u_1<\cdots<u_4$ formed a clique in $G_\phi$, then
-$\phi(u_1),\ldots,\phi(u_4)$ would be distinct, since $D$ has no
+By \cite[Lemma~2.11, with parameter $d-1$]{Bradac}, $D$ contains
+no transitive tournament on $d$ vertices.
+If $u_1<\cdots<u_d$ formed a clique in $G_\phi$, then
+$\phi(u_1),\ldots,\phi(u_d)$ would be distinct, since $D$ has no
 loops, and would form such a tournament. This proves (i).
 Properties (ii) and (iii) follow directly from the definitions.
 
 For (iv), counting projective points gives
-$v=(q^3+q^2+q+1)(q^2+q+1)$.
-If $\dim U=d\in\{0,1,2,3,4\}$, then
-$|R(U)|=(q^d-1)(q^{4-d}-1)/(q-1)^2$.
+$v=(q^d-1)(q^{d-1}-1)/(q-1)^2$.
+If $\dim U=e\in\{0,\ldots,d\}$, then
+$|R(U)|=(q^e-1)(q^{d-e}-1)/(q-1)^2$.
 These formulas imply the first two bounds.
-Finally, every subspace of $\Fq^4$ is the row space of some
-$4\times4$ matrix, giving at most $q^{16}$ subspaces.
+Finally, every subspace of $\Fq^d$ is the row space of some
+$d\times d$ matrix, giving at most $q^{d^2}$ subspaces.
 \end{proof}
 
 \section{Products and the entropy bound}\label{sec:products}
 
-Fix $\eps>0$ and an integer $L=L(a,\eps)\ge5$, to be chosen at
+Fix $\eps>0$ and an integer $L=L(\boldsymbol{s},\eps)\ge5$, to be chosen at
 the end of the proof, and set
 \begin{equation}\label{eq:scale}
- k=\lfloor q(\log q)^{1+4/L}\rfloor,\qquad
- N=\lfloor q^{2a+1}\log q\rfloor.
+ T=\lfloor q(\log q)^{1+4/L}\rfloor,\qquad
+ N=\lfloor q^{S+1}\log q\rfloor.
 \end{equation}
-Our goal is to construct maps
-$\phi_1,\ldots,\phi_a:[N]\to V(D)$ such that
-$\alpha(G_{\phi_1}\cup\cdots\cup G_{\phi_a})<k$.
+After relabelling the first $k$ colours, assume that $s_i\ge4$
+for $1\le i\le a$ and $s_i=3$ for $a<i\le k$, where $0\le a\le k$.
+Put $b=k-a$. For $1\le i\le a$, write
+$D_i=D^*(s_i-1,q)$ and $v_i=|V(D_i)|$.
+Our goal is to construct $K_{s_i}$-free graphs $G_i$ on $[N]$
+for $1\le i\le k$ such that $\alpha(G_1\cup\cdots\cup G_k)<T$.
+For $i\le a$ we use maps $\phi_i:[N]\to V(D_i)$ and
+$G_i=G_{\phi_i}$; the remaining graphs are specified in
+Section~\ref{sec:triangles}. In the one-colour arguments below,
+$D$ continues to denote $D^*(d-1,q)$.
 
-For an integer $0\le m\le k$, a \emph{product of length $m$}
+For an integer $0\le m\le T$, a \emph{product of length $m$}
 is a set $C=C_1\times\cdots\times C_m$, where each
 $C_i$ is a nonempty subset of $V(D)$.
 The product of length zero consists of the single empty tuple.
@@ -172,7 +192,7 @@ $x_i\in C_i$ for every $i\in[m]$.
 A family $\cC$ of products covers a tuple if some member of
 $\cC$ of the same length covers it. All covering families below
 are finite and nonempty, and may contain products of different
-lengths, all at most $k$.
+lengths, all at most $T$.
 
 For $I\subseteq[m]$, write $I=\{i_1,\ldots,i_s\}$ with
 $i_1<\cdots<i_s$. The \emph{coordinate projection} of $C$ onto
@@ -183,11 +203,13 @@ coordinate projection of each of its members.
 For a tuple $x=(x_1,\ldots,x_m)$, write
 $x_I=(x_{i_1},\ldots,x_{i_s})$.
 
-Fix sufficiently large absolute constants $P,A$; the requirements
-on these constants are specified below.
+Fix sufficiently large constants $P,A$, depending on $d$; the requirements
+on these constants are specified below. For the multicolour argument,
+choose them to satisfy these requirements simultaneously for the
+finitely many dimensions $d=s_i\ge4$.
 An admissible covering pair $(\cC,\Delta)$ consists of a covering
 family $\cC$ and a common parameter $\Delta\ge0$ such that every
-factor of every member satisfies $|C_s|\le Pq^3e^\Delta$.
+factor of every member satisfies $|C_s|\le Pq^{d-1}e^\Delta$.
 Its \emph{covering complexity} is
 \begin{equation}\label{eq:domains}
  B(\cC,\Delta)=\log|\cC|+Aq(\log q)\Delta.
@@ -201,27 +223,27 @@ For a random tuple $X$, let $\HH(X)$ denote its Shannon entropy,
 computed using natural logarithms. We use the chain rule,
 subadditivity, and the bound by the logarithm of the support size;
 see~\cite[Chapter~2]{CT}.
-The trivial estimate is $\HH(X)\le m\log v=5m\log q+O(m)$.
+The trivial estimate is $\HH(X)\le m\log v=(2d-3)m\log q+O(m)$.
 The following proposition replaces the leading term by
-$3m\log q$, at the additional cost of the covering complexity.
+$(d-1)m\log q$, at the additional cost of the covering complexity.
 It is useful when that complexity is small.
 
 \begin{proposition}[One-colour entropy bound]\label{prop:entropy}
 Let $(\cC,\Delta)$ be an admissible covering pair, and let $X$
-be a random forward independent tuple of length $1\le m\le k$
+be a random forward independent tuple of length $1\le m\le T$
 whose support is covered by $\cC$.
 For all sufficiently large $q$,
 \begin{equation}\label{eq:entropy-upper}
- \HH(X)\le3m\log q+Am+B(\cC,\Delta).
+ \HH(X)\le(d-1)m\log q+Am+B(\cC,\Delta).
 \end{equation}
 This holds for every probability distribution of $X$;
 projection-closure and rectangle-occupancy assumptions are not required.
 \end{proposition}
 
 \begin{proof}
-By \cite[Claim~2.13, with parameter $3$]{Bradac}, there is an
-absolute constant $b>0$ such that the tree of forward independent
-tuples can be marked so that every node has at most $bq^3$ marked
+By \cite[Claim~2.13, with parameter $d-1$]{Bradac}, there is a
+constant $b=b(d)>0$ such that the tree of forward independent
+tuples can be marked so that every node has at most $bq^{d-1}$ marked
 children and every path from the root has at most $bq\log q$
 unmarked vertices. Fix an integer $\kappa\ge\max\{P,b,1\}$,
 and put $w=\lceil bq\log q\rceil$.
@@ -229,14 +251,14 @@ and put $w=\lceil bq\log q\rceil$.
 Fix a product $C=C_1\times\cdots\times C_m$ in $\cC$.
 Restrict the tree to branches allowed by these coordinate sets.
 The marking properties are preserved, and total branching is at
-most $\kappa q^3e^\Delta$.
+most $\kappa q^{d-1}e^\Delta$.
 If $m\ge w$, \cite[Lemma~2.7]{Bradac} bounds the number of
 permitted forward independent tuples by
-$(2\kappa q^3)^m e^{w\Delta}$.
-If $m<w$, the trivial bound $(\kappa q^3e^\Delta)^m$ is no larger.
+$(2\kappa q^{d-1})^m e^{w\Delta}$.
+If $m<w$, the trivial bound $(\kappa q^{d-1}e^\Delta)^m$ is no larger.
 Summing over products of length $m$ and bounding entropy by the
 logarithm of the support size gives
-$\HH(X)\le3m\log q+m\log(2\kappa)+w\Delta+\log|\cC|$.
+$\HH(X)\le(d-1)m\log q+m\log(2\kappa)+w\Delta+\log|\cC|$.
 Taking $A\ge\max\{\log(2\kappa),b+1\}$ proves the result.
 \end{proof}
 
@@ -254,7 +276,7 @@ probability law to a finite cover, is part of this paper's argument.
 
 \subsection{The quoted theorem}
 
-Put $V=\Fq^4$ and $\mathcal P=PG(V)\times PG(V^*)$.
+Put $V=\Fq^d$ and $\mathcal P=PG(V)\times PG(V^*)$.
 Let $\mathcal F\subseteq\mathcal P$ be the set of incident
 point--dual-point pairs $(p,[\lambda])$, where $\lambda$ vanishes
 on $p$. A tuple $F_s=(p_s,[\lambda_s])$ is
@@ -275,16 +297,16 @@ reversed and dualized, and its positions are returned to the
 original indexing.
 Given a finite probability space $(\Omega,p)$, a tuple-valued
 map $F:\Omega\to\mathcal F^n$, a finite-valued message $u$,
-and a real number $J$, set $J_0=3\log q+\log64$ and
+and a real number $J$, set $J_0=(d-1)\log q+\log64$ and
 \begin{equation}\label{eq:source-excess-definition}
  \mathfrak e(F,u,J)
- =\HH(u)+2n\log15+nJ_0-\HH(F)
+ =\HH(u)+2n\log(3(d+1))+nJ_0-\HH(F)
    +(J-J_0)\EE_p|E_q(F)|.
 \end{equation}
 Formula~\eqref{eq:source-excess-definition} is the specialization of
 \source{Entropy/MarkingTwoEntropy.lean}{excessCost}
-to vector dimension four.
-The term $2n\log15$ follows from the mask-cardinality identity
+to vector dimension $d$.
+The term $2n\log(3(d+1))$ follows from the mask-cardinality identity
 \source{Marking/ExcessCost.lean}{twoMask_log_card}.
 We do not need the internal scan construction beyond this definition
 and the following quoted estimates.
@@ -293,24 +315,24 @@ The source declarations
 \source{Marking/ExcessCost.lean}{twoExpensive_linear}
 and
 \source{Marking/ExcessCost.lean}{excessCost_linear},
-with their dimension parameter equal to $1$, give the following.
+with their dimension parameter equal to $d-3$, give the following.
 For $\log q\ge1$, the sum of the two source expensive-position
-allowances is at most $8000q\log q$.
+allowances is at most $64(d+1)^3q\log q$.
 Moreover, if $P\ge64$, $\Delta,\Lambda,\tau\ge0$,
-$J=3\log q+\log P+\Delta$,
+$J=(d-1)\log q+\log P+\Delta$,
 $\HH(u)\le\Lambda$, and
-$\HH(F)\ge3n\log q-\tau n$, then
+$\HH(F)\ge(d-1)n\log q-\tau n$, then
 \begin{equation}\label{eq:source-excess-bound}
  \mathfrak e(F,u,J)
- \le\Lambda+n(\tau+2\log15+\log P)
-       +8000q(\log q)\Delta.
+ \le\Lambda+n(\tau+2\log(3(d+1))+\log P)
+       +64(d+1)^3q(\log q)\Delta.
 \end{equation}
 Here the constant-gap parameter in \src{excessCost_linear} is
 $\log(P/64)$.
 
-\begin{external}[OpenAI's selected-step theorem in dimension four]
+\begin{external}[OpenAI's selected-step theorem in dimension $d$]
 \label{thm:oai-step}
-Let $P_0=\src{stepPrefactor}(3)$ be the absolute domain prefactor
+Let $P_0=\src{stepPrefactor}(d-1)$ be the domain prefactor, depending only on $d$,
 in~\cite{OAI}. Fix $0<\eta\le1$ and positive constants
 $c_-,c_+,C_0$, and put $\beta=\eta/10^7$.
 For all sufficiently large primes $q$, the following holds,
@@ -335,12 +357,12 @@ and
 \begin{equation}\label{eq:source-length}
  c_-q(\log q)^{1+\eta}\le\ell
  \le c_+q(\log q)^{1+\eta},\qquad
- 24\ell+8000q\log q\le n.
+ d(d+2)\ell+64(d+1)^3q\log q\le n.
 \end{equation}
 Assume also that
 \begin{equation}\label{eq:source-budget}
  \mathfrak e(F,u,J)
- \le\frac{C_0\ell D_0(\log q)^{-\beta}}{24},
+ \le\frac{C_0\ell D_0(\log q)^{-\beta}}{d(d+2)},
 \end{equation}
 and that, for every $\omega$ with $p(\omega)>0$ and every
 subspace $W\le V$,
@@ -353,31 +375,31 @@ a finite probability space $(\Xi,\mu)$, maps
 $\rho:\Xi\to\Omega$ and $M:\Xi\to\Gamma'$ with
 $\Gamma'$ finite, increasing injections
 $\iota_z:[m']\to[n]$, and domains
-$T(\gamma,s)\subseteq\mathcal P$ such that
+$\mathcal T(\gamma,s)\subseteq\mathcal P$ such that
 \begin{enumerate}
 \item[(i)] For every $z$ in the support of $\mu$ and every
 $s\in[m']$, we have
-$F_{\iota_z(s)}(\rho(z))\in T(M(z),s)$.
+$F_{\iota_z(s)}(\rho(z))\in \mathcal T(M(z),s)$.
 \item[(ii)] For every $\omega\in\Omega$,
-$\mu(\rho^{-1}(\omega))\le96p(\omega)$.
+$\mu(\rho^{-1}(\omega))\le4d(d+2)p(\omega)$.
 \item[(iii)] The new message and domains satisfy
 \begin{equation}\label{eq:source-output}
  \begin{gathered}
  \HH_\mu(M)\le nD_0(\log q)^{-\eta/3},\\
- |T(\gamma,s)|\le
- P_0q^3\exp\bigl(16D_0(\log q)^{6\beta}\bigr).
+ |\mathcal T(\gamma,s)|\le
+ P_0q^{d-1}\exp\bigl(16D_0(\log q)^{6\beta}\bigr).
  \end{gathered}
 \end{equation}
 \end{enumerate}
 The domains depend only on the new message and the new coordinate,
 not on the old message $u$ as an additional argument.
-The threshold for $q$ depends only on $\eta,c_-,c_+,C_0$.
+The threshold for $q$ depends only on $d,\eta,c_-,c_+,C_0$.
 \end{external}
 
 This is
 \source{Marking/SelectedStep.lean}{eventually_selected_step}
-with $i=0$. Its class count is $24$, and its domination factor is
-$4\cdot24=96$.
+with $i=d-4$. Its class count is $d(d+2)$, and its domination factor is
+$4d(d+2)$.
 The packing condition in \eqref{eq:source-length} is sufficient
 for the original packing condition by \src{twoExpensive_linear}.
 The inequalities in \eqref{eq:source-admissible}, including the
@@ -397,7 +419,7 @@ declaration.
 
 Choose the constants from Section~\ref{sec:products} once and for
 all so that $P\ge\max\{64,P_0\}$ and
-$A\ge10^4+2\log P$, as well as the requirements in the proof of
+$A\ge\max\{10^4,64(d+1)^3,2\log(3(d+1))\}+2\log P$, as well as the requirements in the proof of
 Proposition~\ref{prop:entropy}.
 For a tuple, \emph{occupancy} counts positions rather than distinct
 labels: its occupancy in $R(U)$ is
@@ -412,9 +434,9 @@ $X:\Omega\to V(D)^m$ take forward independent values.
 Suppose that an admissible covering pair $(\cC,\Delta)$ covers
 $X$ and satisfies
 \begin{equation}\label{eq:dispersed-input}
- \delta k\le m\le k,\qquad
+ \delta T\le m\le T,\qquad
  B(\cC,\Delta)\le Km(\log q)^{j/L},\qquad
- \HH(X)\ge3m\log q-Km(\log q)^{j/L}.
+ \HH(X)\ge(d-1)m\log q-Km(\log q)^{j/L}.
 \end{equation}
 Suppose additionally that every $X(\omega)$ has at most
 $K\log q$ positions in each orthogonal rectangle.
@@ -422,14 +444,14 @@ Then there are $\Omega'\subseteq\Omega$, an integer $m'$, and
 an admissible covering pair $(\mathcal M,\Delta')$, with every
 member of $\mathcal M$ of length $m'$, such that
 \begin{equation}\label{eq:dispersed-output}
- |\Omega'|\ge\frac{|\Omega|}{192},\qquad
- m'\ge\frac{m}{6144},\qquad
+ |\Omega'|\ge\frac{|\Omega|}{8d(d+2)},\qquad
+ m'\ge\frac{m}{256d(d+2)},\qquad
  B(\mathcal M,\Delta')\le m(\log q)^{(j-1)/L}.
 \end{equation}
 For each $\omega\in\Omega'$, some order-preserving subsequence
 of $X(\omega)$ of length $m'$ is covered by $\mathcal M$.
 The threshold is uniform over the input laws and covers after
-$L,\delta,K,j$ are fixed.
+$d,L,\delta,K,j$ are fixed.
 \end{lemma}
 
 \begin{proof}
@@ -451,42 +473,42 @@ by a fixed rule, and use its index as $u(\omega)$.
 Then $\HH(u)\le\log|\cC|$.
 The images of its factors supply the domains in the external
 theorem. Take $F=\iota\circ X$ coordinatewise,
-$n=m$, and $J=3\log q+\log P+\Delta$.
+$n=m$, and $J=(d-1)\log q+\log P+\Delta$.
 By \eqref{eq:source-excess-bound},
 \begin{equation}\label{eq:actual-excess}
  \begin{aligned}
  \mathfrak e(F,u,J)
  &\le\log|\cC|+Km(\log q)^r
-      +(2\log15+\log P)m+8000q(\log q)\Delta\\
+      +(2\log(3(d+1))+\log P)m+64(d+1)^3q(\log q)\Delta\\
  &\le(2K+A)m(\log q)^r.
  \end{aligned}
 \end{equation}
 The last inequality uses the bound on $B(\cC,\Delta)$ and our
 fixed choice of $A$.
 
-Choose $\ell=\lfloor m/48\rfloor$,
+Choose $\ell=\lfloor m/[2d(d+2)]\rfloor$,
 $D_0=(\log q)^{r+\beta}$, and
 $R_0=2\lceil(\log q)^\beta/2\rceil$.
 Since $r\le1-\eta$, condition \eqref{eq:source-admissible}
 holds for sufficiently large $q$.
-Also $m/96\le\ell\le m/48$ and
-$24\ell+8000q\log q\le m$, because
-$m\ge\delta k\ge(\delta/2)q(\log q)^{1+\eta}$.
+Also $m/[4d(d+2)]\le\ell\le m/[2d(d+2)]$ and
+$d(d+2)\ell+64(d+1)^3q\log q\le m$, because
+$m\ge\delta T\ge(\delta/2)q(\log q)^{1+\eta}$.
 Consequently \eqref{eq:source-length} holds with
-$c_-=\delta/192$ and $c_+=1$.
-Take $C_0=24\cdot96(2K+A)$.
+$c_-=\delta/[8d(d+2)]$ and $c_+=1$.
+Take $C_0=4d^2(d+2)^2(2K+A)$.
 Then \eqref{eq:actual-excess} implies
 \eqref{eq:source-budget}, and the occupancy hypothesis holds
 because $C_0\ge K$.
 
 Theorem~\ref{thm:oai-step} now supplies a finite auxiliary law,
 a source map $\rho$, a message $M$, and a common output length
-$m'\ge\ell/64\ge m/6144$, with
+$m'\ge\ell/64\ge m/[256d(d+2)]$, with
 \begin{equation}\label{eq:raw}
  \begin{gathered}
- \mu(\rho^{-1}(\omega))\le96/|\Omega|,\\
+ \mu(\rho^{-1}(\omega))\le4d(d+2)/|\Omega|,\\
  \HH_\mu(M)\le h:=m(\log q)^{r+\beta-\eta/3},\\
- |T(\gamma,s)|\le Pq^3
+ |\mathcal T(\gamma,s)|\le Pq^{d-1}
              \exp\bigl(16(\log q)^{r+7\beta}\bigr).
  \end{gathered}
 \end{equation}
@@ -499,7 +521,7 @@ Markov's inequality retains probability at least $1/2$.
 There are at most $e^{2h+2}$ retained message values, since each
 has probability at least $e^{-(2h+2)}$.
 By \eqref{eq:raw}, the image $\Omega'$ of the retained support
-under $\rho$ has at least $|\Omega|/192$ elements.
+under $\rho$ has at least $|\Omega|/[8d(d+2)]$ elements.
 
 For each $\omega\in\Omega'$, fix one retained witness over
 $\omega$. Its increasing injection selects the required
@@ -539,7 +561,7 @@ subsequence and use Proposition~\ref{prop:entropy} to control its
 entropy loss before applying the external compression input.
 
 \begin{lemma}[One-colour reduction]\label{lem:reduction}
-There is an absolute constant $c\in(0,1)$ with the following
+There is a constant $c=c(d)\in(0,1)$ with the following
 property. Fix $\delta\in(0,1]$, $K\ge1$, and an integer
 $1\le j\le L-4$.
 For all sufficiently large primes $q$, let $\Omega$ be a
@@ -548,9 +570,9 @@ $X:\Omega\to V(D)^m$ take forward independent values.
 Suppose that $X$ is covered by an admissible pair $(\cC,\Delta)$,
 where $\cC$ is projection-closed, and that
 \begin{equation}\label{eq:reduction-input}
- \delta k\le m\le k,\qquad
+ \delta T\le m\le T,\qquad
  B(\cC,\Delta)\le Km(\log q)^{j/L},\qquad
- \HH(X)\ge3m\log q-Km(\log q)^{j/L}.
+ \HH(X)\ge(d-1)m\log q-Km(\log q)^{j/L}.
 \end{equation}
 Then there are $\Omega'\subseteq\Omega$, an integer $m'$, and
 an admissible pair $(\cC',\Delta')$ with $\cC'$ projection-closed,
@@ -558,13 +580,13 @@ such that
 \begin{equation}\label{eq:reduction-output}
  |\Omega'|\ge c|\Omega|,\qquad
  cm\le m'\le m,\qquad
- B(\cC',\Delta')\le20m(\log q)^{(j-1)/L}.
+ B(\cC',\Delta')\le(d^2+4)m(\log q)^{(j-1)/L}.
 \end{equation}
 Each $X(\omega)$ with $\omega\in\Omega'$ has an order-preserving
 subsequence of the common length $m'$ covered by $\cC'$.
 The selected positions may depend on $\omega$.
-The threshold depends only on $L,\delta,K,j$ and the fixed
-absolute constants $P,A$.
+The threshold depends only on $d,L,\delta,K,j$ and the fixed
+constants $P,A$.
 \end{lemma}
 
 \begin{proof}
@@ -578,9 +600,9 @@ Lemma~\ref{lem:construction}(iv) gives
 \begin{equation}\label{eq:peel}
  \begin{aligned}
  \log(\text{number of possible lists})
- &\le\lfloor m/h\rfloor\log(q^{16}+1)\le17m,\\
+ &\le\lfloor m/h\rfloor\log(q^{d^2}+1)\le(d^2+1)m,\\
  \left|\bigcup\text{recorded rectangles}\right|
- &\le4q^2m/h\le4q^3(\log q)^{4/L}.
+ &\le4q^{d-2}m/h\le4q^{d-1}(\log q)^{4/L}.
  \end{aligned}
 \end{equation}
 After termination, fewer than $h\le2\log q$ remaining positions
@@ -605,13 +627,13 @@ Take $\Delta'=(4/L)\log\log q$.
 By \eqref{eq:peel} and $P\ge4$, its domains are admissible, and
 \[
  B(\cC',\Delta')
- \le17m+\log(m_0+1)
+ \le(d^2+1)m+\log(m_0+1)
        +\frac{4A}{L}q(\log q)\log\log q
- \le19m
+ \le(d^2+3)m
 \]
 for sufficiently large $q$.
-Here $m\ge\delta k$ and
-$q(\log q)\log\log q=o(k)$, with $L$ fixed.
+Here $m\ge\delta T$ and
+$q(\log q)\log\log q=o(T)$, with $L$ fixed.
 Thus \eqref{eq:reduction-output} holds with
 $\Omega'=\Omega_0$ and $m'=m_0$, since $(j-1)/L\ge0$.
 
@@ -624,13 +646,13 @@ Proposition~\ref{prop:entropy} applies to every conditional law
 of the full tuple, with the same cover. Hence
 \[
  \HH(X)\le\log2+p_0\HH(X\mid Z=1)
- +(1-p_0)(3m\log q+Am+B),
+ +(1-p_0)((d-1)m\log q+Am+B),
 \]
 with the last conditional contribution omitted when $p_0=1$.
 Using \eqref{eq:reduction-input}, we obtain
 \begin{equation}\label{eq:conditioned}
  \HH(X\mid Z=1)
- \ge3m\log q-O_{A,K}\bigl(m(\log q)^r\bigr).
+ \ge(d-1)m\log q-O_{A,K}\bigl(m(\log q)^r\bigr).
 \end{equation}
 Thus the entropy loss under this conditioning is controlled by
 an upper bound on the discarded part, not by a general assertion
@@ -645,7 +667,7 @@ Both $Y$ and $W$ are forward independent, and both are covered
 by the unchanged family $\cC$ because it is projection-closed.
 Consequently,
 \[
- \HH(W)\le3(m-m_0)\log q+A(m-m_0)+B,
+ \HH(W)\le(d-1)(m-m_0)\log q+A(m-m_0)+B,
  \qquad \HH(I)\le\log\binom m{m_0}\le m\log2.
 \]
 Together with \eqref{eq:conditioned}, subadditivity gives
@@ -653,11 +675,11 @@ Together with \eqref{eq:conditioned}, subadditivity gives
  \begin{aligned}
  \HH(Y)
  &\ge\HH(X\mid Z=1)-\HH(I)-\HH(W)\\
- &\ge3m_0\log q-O_{A,K}\bigl(m_0(\log q)^r\bigr).
+ &\ge(d-1)m_0\log q-O_{A,K}\bigl(m_0(\log q)^r\bigr).
  \end{aligned}
 \end{equation}
 The covering complexity is still $B\le4Km_0(\log q)^r$,
-and $m_0\ge\delta k/4$.
+and $m_0\ge\delta T/4$.
 Every rectangle contains at most $2\log q$ positions of $Y$.
 Thus Lemma~\ref{lem:dispersed} applies with lower length
 proportion $\delta/4$ and a sufficiently large fixed input
@@ -667,8 +689,8 @@ constant, at least $2$, absorbing the constants in
 It gives a set $\Omega'\subseteq\Omega_0$, a common length
 $m'$, and a fixed-length admissible cover $(\mathcal M,\Delta')$
 with
-$|\Omega'|\ge|\Omega_0|/192$,
-$m'\ge m_0/6144$, and
+$|\Omega'|\ge|\Omega_0|/[8d(d+2)]$,
+$m'\ge m_0/[256d(d+2)]$, and
 $B(\mathcal M,\Delta')\le m_0(\log q)^{(j-1)/L}$.
 Let $\cC'$ contain all coordinate projections of all members
 of $\mathcal M$, with the same parameter $\Delta'$.
@@ -685,20 +707,111 @@ Here $m'\le m_0$ and $(j-1)/L\ge0$.
 The chosen subsequences of $Y$ are also order-preserving
 subsequences of the original tuples $X$.
 Finally,
-$|\Omega'|\ge|\Omega|/384$ and $m'\ge m/24576$.
-Thus $c=1/24576$ works in both cases.
+$|\Omega'|\ge|\Omega|/[16d(d+2)]$ and $m'\ge m/[1024d(d+2)]$.
+Thus $c=1/[1024d(d+2)]$ works in both cases.
 All input constants for Lemma~\ref{lem:dispersed} depend only
 on the fixed parameters, giving the claimed uniformity.
 \end{proof}
 
-\section{The \texorpdfstring{$a$}{a}-colour induction}
+\section{The triangle-free colours}\label{sec:triangles}
+
+The compression theorem above requires $d\ge4$.
+For the colours with $s_i=3$, we use a triangle-free graph with
+few independent sets. The same graph must control every length
+that occurs after taking subsequences.
+
+For a graph $H$, let $i_m(H)$ denote the number of its independent
+sets of size $m$.
+
+\begin{lemma}[Triangle-free colours]\label{lem:triangles}
+There is an absolute constant $C_\triangle\ge1$ such that, for all
+sufficiently large primes $q$, there is a triangle-free graph $H$
+on $[N]$ satisfying
+\begin{equation}\label{eq:triangle-count}
+ \frac{i_m(H)}{\binom Nm}\le\left(\frac{C_\triangle}{q}\right)^m
+ \qquad\text{for every integer }u\le m\le T,
+ \qquad u=\left\lfloor\frac{q\log q}{2}\right\rfloor.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cite[Theorem~1.3]{ACM}, for all sufficiently large integers $u$
+and every integer $n\ge u^2/\log u$, there is a triangle-free graph
+on $n$ vertices with at most
+$e^{C_0u}\binom{pn}{u}$ independent $u$-sets, where
+$p=(\log u)/u$ and $C_0$ is an absolute constant.
+Apply this with $n=N$ and $u=\lfloor q(\log q)/2\rfloor$.
+The size condition holds because $S\ge1$ and
+$u^2/\log u=(1/4+o(1))q^2\log q\le N$.
+Also $p=O(1/q)$, so the resulting graph $H$ satisfies
+\begin{equation}\label{eq:triangle-initial}
+ u!\,i_u(H)\le e^{C_0u}(pN)^u\le(C_1N/q)^u
+\end{equation}
+for an absolute constant $C_1$.
+
+Fix $m\ge u$. If $i_m(H)=0$, there is nothing to prove.
+Otherwise, let $Y=(Y_1,\ldots,Y_m)$ be uniform over all ordered
+independent $m$-tuples with distinct entries. Thus
+$\HH(Y)=\log(m!\,i_m(H))$.
+The chain rule and the fact that conditioning reduces entropy give
+\[
+ \binom{m-1}{u-1}\HH(Y)
+ \le\sum_{J\in\binom{[m]}u}\HH(Y_J)
+ \le\binom mu\log(u!\,i_u(H)).
+\]
+Indeed, expand each $\HH(Y_J)$ in increasing coordinate order and
+condition each term additionally on all earlier coordinates;
+each coordinate then occurs $\binom{m-1}{u-1}$ times.
+Consequently, \eqref{eq:triangle-initial} implies
+\begin{equation}\label{eq:triangle-larger}
+ m!\,i_m(H)\le(u!\,i_u(H))^{m/u}\le(C_1N/q)^m.
+\end{equation}
+For all $m\le T$, we have $m\le N/2$ for sufficiently large $q$,
+since $T=o(N)$. Writing $(N)_m=N(N-1)\cdots(N-m+1)$, it follows that
+\[
+ \frac{i_m(H)}{\binom Nm}
+ =\frac{m!\,i_m(H)}{(N)_m}
+ \le\left(\frac{2C_1}{q}\right)^m.
+\]
+Taking $C_\triangle\ge\max\{1,2C_1\}$ proves the lemma.
+\end{proof}
+
+Fix one such graph $H$. For a permutation $\pi$ of $[N]$, let
+$H_\pi$ be the graph in which $uv$ is an edge if and only if
+$\pi(u)\pi(v)\in E(H)$.
+For any fixed $m$-set $U\subseteq[N]$ and independent uniform
+permutations $\pi_1,\ldots,\pi_b$, Lemma~\ref{lem:triangles} gives
+\begin{equation}\label{eq:triangle-permutations}
+ \Pr\bigl(U\text{ is independent in every }H_{\pi_j}\bigr)
+ =\left(\frac{i_m(H)}{\binom Nm}\right)^b
+ \le\left(\frac{C_\triangle}{q}\right)^{bm}
+ \qquad(u\le m\le T).
+\end{equation}
+When $b=0$, this probability is $1$.
+For each fixed $\delta>0$, all lengths $\delta T\le m\le T$
+satisfy $m\ge u$ for sufficiently large $q$.
+Thus the same graph $H$ applies throughout the induction below.
+
+\section{The \texorpdfstring{$k$}{k}-colour induction}
 \label{sec:induction}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
-Let $\cS$ be the set of all $a$-tuples of maps
-$(\phi_1,\ldots,\phi_a)$ from $[N]$ to $V(D)$.
-Thus $|\cS|=v^{aN}$.
-Fix $K=4A+20$.
+Let $\cS$ be the set of all inputs
+$(\phi_1,\ldots,\phi_a,\pi_1,\ldots,\pi_b)$, where
+$\phi_i:[N]\to V(D_i)$ for $1\le i\le a$, and each $\pi_j$
+is a permutation of $[N]$.
+Thus $|\cS|=(N!)^b\prod_{i=1}^a v_i^N$.
+Use common constants $P,A$ for the finitely many dimensions
+$d=s_i\ge4$, and fix
+\[
+ K=2A\max_{1\le i\le k}(s_i-2)
+     +\max_{1\le i\le k}(s_i^2+4),\qquad
+ c=\min_{1\le i\le k}\frac1{1024s_i(s_i+2)}.
+\]
+This $c$ is a common lower bound for the retained proportions in
+Lemma~\ref{lem:reduction} for every dimension that is used.
+Empty sums and tuples have value and entropy zero, respectively;
+empty products have value one.
 
 We prove the following assertion for every fixed
 $\delta\in(0,1]$ and every vector of integers
@@ -706,101 +819,128 @@ $(j_1,\ldots,j_a)\in\{0,\ldots,L-4\}^a$:
 for all sufficiently large $q$, the following data do not exist.
 There is a set $\Omega\subseteq\cS$ with
 $|\Omega|\ge\delta|\cS|$, a single integer
-$\delta k\le m\le k$, and, for each
-$\omega=(\phi_1,\ldots,\phi_a)\in\Omega$, an increasing
-list $u_1(\omega)<\cdots<u_m(\omega)$ in $[N]$, such that
+$\delta T\le m\le T$, and, for each
+$\omega=(\phi_1,\ldots,\phi_a,\pi_1,\ldots,\pi_b)\in\Omega$,
+an increasing list $u_1(\omega)<\cdots<u_m(\omega)$ in $[N]$, such that
 $X_i(\omega)=(\phi_i(u_1(\omega)),\ldots,
-\phi_i(u_m(\omega)))$ is forward independent for every $i$.
-Each $X_i$ is covered by an admissible pair
-$(\cC_i,\Delta_i)$ with $\cC_i$ projection-closed and
+\phi_i(u_m(\omega)))$ is forward independent for every $1\le i\le a$,
+and $\{u_1(\omega),\ldots,u_m(\omega)\}$ is independent in
+every $H_{\pi_j}$, $1\le j\le b$.
+Each $X_i$ is covered by an admissible pair for dimension $d=s_i$,
+$(\cC_i,\Delta_i)$, with $\cC_i$ projection-closed and
 \begin{equation}\label{eq:bounds}
  B_i:=B(\cC_i,\Delta_i)
- \le Kk(\log q)^{j_i/L}\qquad(1\le i\le a).
+ \le KT(\log q)^{j_i/L}\qquad(1\le i\le a).
 \end{equation}
-The positions may depend on the whole labelling, but the list
+The positions may depend on the whole input, but the list
 is common to all colours, and its length $m$ is the same for
 every input. We induct on $j_1+\cdots+j_a$.
 The constant $K$ stays fixed, while the assertion is made for
 every fixed $\delta$.
 
 Equip $\Omega$ with its uniform distribution.
-For any prescribed $a$-tuple of $m$-tuples, there are at most
-$\binom Nm v^{a(N-m)}$ original labellings giving that output:
-choose its common increasing set of positions and then label
-the remaining positions arbitrarily.
+For a prescribed $a$-tuple $x$ of $m$-tuples, first choose its
+common increasing set of positions. In the uniform distribution
+on $\cS$, the probability of the prescribed labels at these
+positions is $\prod_{i=1}^a v_i^{-m}$.
+Independently, the probability that these positions are independent
+in all the triangle-free colours is at most
+$(C_\triangle/q)^{bm}$ by \eqref{eq:triangle-permutations};
+here $m\ge u$ for sufficiently large $q$, since $\delta$ is fixed.
+Summing over the common position sets and then restricting to
+$\Omega$ gives
+\begin{equation}\label{eq:mixed-atom}
+ \Pr_\Omega\bigl((X_1,\ldots,X_a)=x\bigr)
+ \le\delta^{-1}\binom Nm
+       \left(\frac{C_\triangle}{q}\right)^{bm}
+       \prod_{i=1}^a v_i^{-m}.
+\end{equation}
 There is no extra ordering factor. Bounding entropy below by
 minus the logarithm of the largest atom gives
 \begin{align}
  \HH(X_1,\ldots,X_a)
- &\ge am\log v-\log\binom Nm+\log\delta\notag\\
- &\ge3am\log q+\frac4L m\log\log q-O_\delta(m).
+ &\ge m\sum_{i=1}^a\log v_i+bm\log q-\log\binom Nm
+       -bm\log C_\triangle+\log\delta\notag\\
+ &\ge\left(\sum_{i=1}^a(s_i-1)\right)m\log q
+       +\frac4L m\log\log q-O_{\boldsymbol{s},\delta}(m).
  \label{eq:joint}
 \end{align}
-Indeed, $v\ge q^5$,
+Indeed, $v_i\ge q^{2s_i-3}$,
 $m\ge(\delta/2)q(\log q)^{1+4/L}$, and
-$N\le q^{2a+1}\log q$ imply
-$\log(eN/m)\le2a\log q-(4/L)\log\log q+\log(2e/\delta)$;
-now use $\binom Nm\le(eN/m)^m$.
+$N\le q^{S+1}\log q$ imply
+$\log(eN/m)\le S\log q-(4/L)\log\log q+\log(2e/\delta)$.
+Now use $\binom Nm\le(eN/m)^m$ and
+\[
+ \sum_{i=1}^a(2s_i-3)+b-S=\sum_{i=1}^a(s_i-1).
+\]
 This argument allows arbitrary dependence between the selected
-tuples and the chosen positions.
+tuples and the chosen positions. Independence is used only in
+the full experiment on $\cS$, not after restricting to $\Omega$.
 
 \paragraph{The base case.}
-If $j_1=\cdots=j_a=0$, Proposition~\ref{prop:entropy} and
-subadditivity imply
+If all $j_i$ are zero, including the case $a=0$,
+Proposition~\ref{prop:entropy} and subadditivity imply
 \[
  \begin{aligned}
  \HH(X_1,\ldots,X_a)
  &\le\sum_{i=1}^a\HH(X_i)\\
- &\le3am\log q+aAm+\sum_{i=1}^aB_i
- =3am\log q+O_{a,\delta}(m),
+ &\le\left(\sum_{i=1}^a(s_i-1)\right)m\log q+aAm+\sum_{i=1}^aB_i\\
+ &=\left(\sum_{i=1}^a(s_i-1)\right)m\log q
+    +O_{\boldsymbol{s},\delta}(m),
  \end{aligned}
 \]
-where $K$ is fixed and $k\le m/\delta$.
+where $K$ is fixed and $T\le m/\delta$.
 This contradicts \eqref{eq:joint} for sufficiently large $q$.
 
 \paragraph{The induction step.}
-Otherwise, relabel the colours so that
-$j_1=\max_i j_i\ge1$.
+Otherwise, choose $h\in[a]$ such that
+$j_h=\max_i j_i\ge1$.
 Applying Proposition~\ref{prop:entropy} to all other colours
-gives
+with index at most $a$ gives
 \begin{equation}\label{eq:marginal}
  \begin{aligned}
- \HH(X_1)
- &\ge\HH(X_1,\ldots,X_a)-\sum_{i=2}^a\HH(X_i)\\
- &\ge3m\log q-\sum_{i=2}^aB_i-O_{a,\delta}(m).
+ \HH(X_h)
+ &\ge\HH(X_1,\ldots,X_a)-\sum_{\substack{1\le i\le a\\i\ne h}}\HH(X_i)\\
+ &\ge(s_h-1)m\log q-\sum_{\substack{1\le i\le a\\i\ne h}}B_i
+       -O_{\boldsymbol{s},\delta}(m).
  \end{aligned}
 \end{equation}
 For $a=1$, the sums over other colours are empty.
-Since $j_i\le j_1$ and $k\le m/\delta$, we have
-$B_1\le(K/\delta)m(\log q)^{j_1/L}$ and
-$\sum_{i=2}^aB_i\le((a-1)K/\delta)m(\log q)^{j_1/L}$.
-Thus the hypotheses of Lemma~\ref{lem:reduction} hold for
-$X_1$, with a sufficiently large fixed input constant depending
-on $a,\delta,K,A$.
+Since $j_i\le j_h$ and $T\le m/\delta$, we have
+$B_h\le(K/\delta)m(\log q)^{j_h/L}$ and
+$\sum_{i\ne h}B_i\le((a-1)K/\delta)m(\log q)^{j_h/L}$,
+where the sum is over $1\le i\le a$.
+Thus the hypotheses of Lemma~\ref{lem:reduction}, with $d=s_h$,
+hold for $X_h$, with a sufficiently large fixed input constant
+depending on $\boldsymbol{s},\delta,K,A$.
 
 Apply that lemma and retain the same selected subsequence in
 every other colour.
 For each input, composing the new increasing selection with
 its old list gives a common increasing list of original
 vertices of a fixed length $m'$.
-Every untreated family already contains the required projections,
-so we keep $(\cC_i,\Delta_i)$ unchanged for $2\le i\le a$.
+Every untreated covering family already contains the required projections,
+so we keep $(\cC_i,\Delta_i)$ unchanged for $1\le i\le a$, $i\ne h$.
+Independence in each triangle-free colour is preserved by taking a subset.
 The new complexities satisfy
 \begin{equation}\label{eq:descent}
- B_1'\le20m(\log q)^{(j_1-1)/L}
-       \le Kk(\log q)^{(j_1-1)/L},\qquad
- B_i'=B_i\quad(2\le i\le a).
+ \begin{gathered}
+ B_h'\le(s_h^2+4)m(\log q)^{(j_h-1)/L}
+       \le KT(\log q)^{(j_h-1)/L},\\
+ B_i'=B_i\qquad(1\le i\le a,\ i\ne h).
+ \end{gathered}
 \end{equation}
-Also $|\Omega'|\ge c\delta|\cS|$ and $m'\ge c\delta k$.
+Also $|\Omega'|\ge c\delta|\cS|$ and $m'\ge c\delta T$.
 The induction hypothesis at
-$(j_1-1,j_2,\ldots,j_a)$ and $\delta'=c\delta$
-therefore gives a contradiction.
+$(j_1,\ldots,j_h-1,\ldots,j_a)$ and $\delta'=c\delta$
+therefore gives a contradiction. It is applied with the uniform
+law on $\Omega'$, to which \eqref{eq:mixed-atom} applies afresh.
 The input constant in the reduction may increase, but the
-output coefficient $20$, and hence the induction constant $K$,
+output coefficient $s_h^2+4$, and hence the induction constant $K$,
 does not.
 
 All thresholds used in this step depend only on fixed numerical
-data, not on the actual labellings or covers.
+data, not on the actual inputs or covers.
 For a fixed index vector and $\delta$, take the maximum of the
 reduction threshold and the threshold in the smaller-index
 induction hypothesis.
@@ -808,49 +948,50 @@ This completes the induction; its depth is at most $a(L-4)$,
 independently of $q$.
 
 \paragraph{Starting the induction.}
-Suppose every $a$-tuple of label maps had a common independent
-$k$-set. Choose one by a fixed rule and list its vertices
-increasingly. Set $\Omega=\cS$, $m=k$, and, for every $i$,
-$\cC_i=\{V(D)^s:0\le s\le k\}$ with
-$\Delta_i=2\log q$.
+Suppose every input in $\cS$ had a common independent
+$T$-set in all $k$ associated graphs. Choose one by a fixed rule
+and list its vertices increasingly. Set $\Omega=\cS$, $m=T$,
+and, for every $1\le i\le a$,
+$\cC_i=\{V(D_i)^r:0\le r\le T\}$ with
+$\Delta_i=(s_i-2)\log q$.
 These families are projection-closed and admissible, since
-$v\le4q^5\le Pq^3e^{2\log q}$.
+$v_i\le4q^{2s_i-3}\le Pq^{s_i-1}e^{(s_i-2)\log q}$.
 Moreover,
 \[
- B_i=\log(k+1)+2Aq(\log q)^2
- \le(4A+1)k(\log q)^{(L-4)/L}
- \le Kk(\log q)^{(L-4)/L}
+ B_i=\log(T+1)+A(s_i-2)q(\log q)^2
+ \le\bigl(2A(s_i-2)+1\bigr)T(\log q)^{(L-4)/L}
+ \le KT(\log q)^{(L-4)/L}
 \]
 for sufficiently large $q$.
 This contradicts the assertion with $\delta=1$ and
-$j_1=\cdots=j_a=L-4$.
-Hence some maps $\phi_1,\ldots,\phi_a$ have associated graphs
-$G_i=G_{\phi_i}$ satisfying
-$\alpha(G_1\cup\cdots\cup G_a)<k$.
-Each $G_i$ is $K_4$-free by Lemma~\ref{lem:construction}(i).
+all $j_i=L-4$; for $a=0$, it contradicts the base case directly.
+Hence some input yields graphs
+$G_i=G_{\phi_i}$ for $1\le i\le a$ and
+$G_{a+j}=H_{\pi_j}$ for $1\le j\le b$, satisfying
+$\alpha(G_1\cup\cdots\cup G_k)<T$.
+Each $G_i$ is $K_{s_i}$-free, by Lemma~\ref{lem:construction}(i)
+for $i\le a$ and the triangle-freeness of $H$ otherwise.
 
 Colour $E(G_i)\setminus\bigcup_{h<i}E(G_h)$ with colour $i$
-for $1\le i\le a$, and all remaining edges with colour $a+1$.
-There is no $K_4$ in the first $a$ colours and no $K_k$ in the
-last colour, so
-$r(\underbrace{4,\ldots,4}_{a\text{ copies}},k)>N$.
+for $1\le i\le k$, and all remaining edges with colour $k+1$.
+There is no $K_{s_i}$ in colour $i$ for any $1\le i\le k$ and
+no $K_T$ in the last colour, so $r(s_1,\ldots,s_k,T)>N$.
 
 \paragraph{Passing to arbitrary $t$.}
 For sufficiently large $t$, Bertrand's postulate gives a prime
 $q\in[x,2x]$, where $x=t/[4(\log t)^{1+4/L}]$.
-Then $k\le t$, $\log q\sim\log t$, and \eqref{eq:scale} yields
+Then $T\le t$, $\log q\sim\log t$, and \eqref{eq:scale} yields
 \[
- r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)
- \ge c_{a,L}\frac{t^{2a+1}}
- {(\log t)^{2a+4(2a+1)/L}}.
+ r(s_1,\ldots,s_k,t)
+ \ge c_{\boldsymbol{s},L}\frac{t^{S+1}}
+ {(\log t)^{S+4(S+1)/L}}.
 \]
-Choose an integer $L\ge\max\{5,4(2a+1)/\eps\}$.
+Choose an integer $L\ge\max\{5,4(S+1)/\eps\}$.
 This proves the asserted lower bound.
 The unconditional upper bound in
 He--Wigderson~\cite[Appendix~B]{HW}, with
-$S=\sum_{i=1}^a(4-2)=2a$, is
-$r(\underbrace{4,\ldots,4}_{a\text{ copies}},t)
-\le C_a t^{2a+1}/(\log t)^{2a}$.
+$S=\sum_{i=1}^k(s_i-2)$, is
+$r(s_1,\ldots,s_k,t)\le C_{\boldsymbol{s}}t^{S+1}/(\log t)^S$.
 Together with the lower bound for every fixed $\eps>0$, this
 proves the claimed logarithmic exponent.
 \end{proof}
@@ -892,6 +1033,14 @@ The external results used are
 Their auxiliary definitions and the output structure are linked
 in Section~\ref{sec:compression}.
 Source statements consulted on 8 October 2026.
+
+\bibitem{ACM}
+B. Andrades, M. Campos, and R. Morris,
+\emph{On the multicolour Ramsey numbers $R(3,3,k)$},
+\href{https://arxiv.org/abs/2609.28455v1}{arXiv:2609.28455v1},
+23 September 2026.
+The independent-set count used in Section~\ref{sec:triangles}
+is Theorem~1.3.
 
 \end{thebibliography}
 \end{document}
