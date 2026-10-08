@@ -138,7 +138,4 @@ He--Wigderson Ramsey bound; OpenAI SharpLogRamsey.
 
 ## AI assistance
 
-AI tools assisted in the development and revision of the manuscript.
-The cited external compression theorem is taken from OpenAI's
-formalized source. The full argument, including its new deductions,
-has not been independently verified as of this version.
+This manuscript was produced by GPT-6 under the author's guidance.
