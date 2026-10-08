@@ -138,16 +138,6 @@ projection-closed covering families;
 probabilistic combinatorics; extremal graph theory;
 He--Wigderson Ramsey bound; OpenAI SharpLogRamsey.
 
-## Status
-
-**Preliminary, unrefereed research manuscript.** Revised
-October 8, 2026. Independent verification is pending, including
-the interface between the quoted formal theorem and the stated
-covering consequence. The text may be revised.
-
-Comments, corrections, and reports of possible mathematical errors
-are welcome.
-
 ## AI assistance
 
 AI tools assisted in the development and revision of the manuscript.
