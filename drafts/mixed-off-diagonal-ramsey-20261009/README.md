@@ -3,8 +3,6 @@
 **Manuscript:** *Common independent sets in $K_{s_1}$-free, $\ldots$, $K_{s_k}$-free graphs.*
 
 [Read the LaTeX manuscript](./common_independent_sets_mixed_cliques.tex) ·
-[Research webpage](https://lanchao-wang.github.io/drafts/mixed-off-diagonal-ramsey-20261009/) ·
-[Publications](https://lanchao-wang.github.io/publications.html)
 
 ## Overview
 
@@ -120,13 +118,6 @@ rectangle peeling; projection-closed covering families;
 He--Wigderson upper bound; Andrades--Campos--Morris;
 OpenAI SharpLogRamsey.
 
-## Status
-
-**Preliminary, unrefereed manuscript.** Source revision: October 8, 2026;
-posted in this repository on October 9, 2026.
-The mathematical proof and its application of external results have
-not been independently verified. Corrections and reports of
-possible errors are welcome.
 
 ## AI assistance
 
