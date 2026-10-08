@@ -1,8 +1,6 @@
 # Common Independent Sets in a Fixed Number of $K_4$-Free Graphs
 
 [Read the manuscript (LaTeX source)](./ramsey_4a_t_blackbox_20261008.tex) ·
-[Research webpage](https://lanchao-wang.github.io/papers/ramsey_4a_t_20261008/) ·
-[Publications](https://lanchao-wang.github.io/publications.html)
 
 ## Overview
 
