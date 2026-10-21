@@ -1,0 +1,799 @@
+% !TeX program = pdflatex
+% Complete English source, including the bibliography.
+% Revised 20 October 2026 after checking the compressed proof.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsthm,mathtools,microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{authblk}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\numberwithin{equation}{section}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\op}{o_{\mathbb P}}
+\newcommand{\ov}[1]{\overline{#1}}
+\newenvironment{revision}{\color{blue}}{}
+\newcommand{\rev}[1]{{\color{blue}#1}}
+\title{Asymptotic equality of chromatic and choice numbers \\ in random graphs}
+
+\author{Lanchao Wang \qquad Jiasheng Zeng}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+We prove a conjecture of Alon, Krivelevich and Sudakov
+that the choice number and chromatic number of the random
+graph $G(n,p)$ are asymptotically equal whenever
+$np\to\infty$. More precisely, we show that
+\[
+ \ch(G(n,p))=(1+\op(1))\chi(G(n,p)).
+\]
+Our proof treats the cases of growing and bounded
+colour-class sizes separately. In the first case, we
+establish a uniform independent-set estimate and apply
+the colouring method of Krivelevich and Vu. In the
+second, we develop a deterministic result relating
+clique partitions to list colourings, using random
+sampling of clique packings and Kahn's matching theorem.
+\end{abstract}
+
+
+\section{Introduction}\label{sec:main}
+
+List colouring is a natural strengthening of ordinary graph
+colouring. For a graph $G$, the chromatic number $\chi(G)$ is
+the minimum number of colours needed to properly colour its
+vertices. In list colouring, each vertex $v$ is assigned a
+set $L(v)$ of available colours, and a proper colouring must
+assign to each vertex a colour from its list. The
+\emph{choice number} $\ch(G)$ is the least integer $k$ such
+that every assignment of lists of size $k$ admits a proper
+colouring. Clearly, $\chi(G)\le\ch(G)$. However, these two parameters can differ significantly.
+For example, the complete bipartite graph $K_{n,n}$ satisfies
+$\ch(K_{n,n})=(1+o(1))\log_2 n$.
+
+
+
+In this paper, we study the relationship between the
+chromatic number and the choice number of the random
+graph $G(n,p)$. Alon, Krivelevich and Sudakov~\cite{AKS}
+established the correct order of magnitude of the choice
+number, proving that
+$\ch(G(n,p))=\Theta(np/\log(np))$
+with high probability whenever $2<np\le n/2$.
+They further conjectured that the choice number
+and the chromatic number are asymptotically equal
+whenever $np\to\infty$.
+
+\begin{conjecture}[{\cite{AKS}}]
+For every fixed $\varepsilon>0$ and every
+$p=p(n)\in(0,1)$ satisfying $np\to\infty$,
+with high probability,
+\[
+ \ch(G(n,p))\le(1+\varepsilon)\chi(G(n,p)).
+\]
+\end{conjecture}
+
+The conjecture was already known for $p=1/2$ by
+a result of Kahn; see Alon~\cite[Proposition~4.4]{Alon1993}.
+As noted by Krivelevich~\cite{Krivelevich2000},
+the same argument applies to every fixed
+$p\in(0,1)$. For varying $p$, Krivelevich and
+Vu~\cite{KV} proved that
+$\ch(G(n,p))\le(2+o(1))\chi(G(n,p))$
+with high probability whenever $np\to\infty$
+and $p\le0.9$.
+
+
+Several works established the conjecture in increasingly
+wide ranges of $p$. For every fixed $\delta>0$,
+Krivelevich~\cite{Krivelevich2000} proved the conjecture
+for $n^{-1/4+\delta}\le p\le3/4$, and
+Krivelevich, Sudakov, Vu and Wormald~\cite{KSVW2003}
+extended this range to
+$n^{-1/3+\delta}\le p\le3/4$.
+Frieze, Mitsche, P\'erez-Gim\'enez and
+Pra{\l}at~\cite{FMPP2015} further extended it to
+$
+ n^{-1/3}(\log n)^2(\log\log n)^{1/3}
+ \ll p\le1-\delta.
+$
+However, the conjecture remained open in its full
+generality, particularly when $np$ grows arbitrarily
+slowly or when $p$ approaches one.
+We resolve this conjecture in its full generality.
+
+\begin{theorem}\label{thm:main}
+For every fixed $\varepsilon>0$ and every
+$p=p(n)\in(0,1)$ satisfying $np\to\infty$,
+with high probability,
+\[
+ \ch(G(n,p))\le(1+\varepsilon)\chi(G(n,p)).
+\]
+\end{theorem}
+
+
+
+\medskip
+\noindent\textbf{Organization of the paper.}
+In Section~\ref{sec:overview}, we give an overview of the proof.
+In Section~\ref{sec:growing}, we establish a uniform
+independent-set estimate and apply it to list colouring.
+In Section~\ref{sec:lifting}, we prove a deterministic result
+relating clique partitions to list colourings.
+Section~\ref{sec:proof} completes the proof of
+Theorem~\ref{thm:main}.
+
+
+\section{Proof overview}\label{sec:overview}
+
+The proof of Theorem~\ref{thm:main} separates two cases
+according to the size of the colour classes. When
+$\log(1/(1-p))=o(\log(np))$, the average size of a colour
+class in an optimal colouring tends to infinity.
+In the remaining case, after passing to a suitable
+subsequence, $p\to1$ and the relevant colour classes
+have bounded size. 
+
+\medskip
+\noindent\textbf{Large colour classes.}
+We adapt the list-colouring method of Krivelevich and
+Vu~\cite{KV}, which repeatedly colours large independent
+sets and then completes the colouring using a separate
+argument. The main difficulty is to ensure that every
+sufficiently large vertex subset contains an independent
+set of almost optimal size, since the subsets encountered
+during the colouring process depend on previous choices.
+We establish this uniform property using known
+chromatic-number asymptotics, a vertex-deletion argument,
+and a comparison inequality for hereditary graph
+properties. This allows the method to work even when
+$np\to\infty$ arbitrarily slowly.
+
+
+\medskip
+\noindent\textbf{Bounded colour classes.}
+When colour classes have bounded size, losing even one
+vertex from each class may affect the leading term.
+We therefore take a different approach, based on clique
+partitions of the complement.
+For a graph $H$, write $\ov H$ for its complement.
+For each integer $s\ge2$, let $\alpha_s(H)$ denote the
+maximum order of an induced $K_s$-free subgraph of $H$,
+and put $\alpha_1(H)=0$.
+Our main ingredient is the following deterministic clique partition
+proposition, which may be of independent interest.
+
+
+\begin{proposition}\label{prop:lifting}
+For every integer $r\ge2$ and every $\varepsilon>0$,
+there exist $\delta>0$ and $n_0$ such that the following
+holds for all $n\ge n_0$.
+If an $n$-vertex graph $H$ satisfies
+$\alpha_{r-1}(H)\le\delta n$ and admits a partition
+into $k$ cliques, each of size at most $r$, then
+$
+ \ch(\ov H)\le k+\varepsilon n.
+$
+\end{proposition}
+
+
+Since $k\ge n/r$, the proposition also gives
+$\ch(\ov H)\le(1+r\varepsilon)k$.
+In particular, if $H$ is $K_{r+1}$-free, taking an
+optimal clique partition yields
+$\ch(\ov H)\le\chi(\ov H)+\varepsilon n$.
+
+The main idea is to construct new colour classes
+from clique packings that may cross the original
+partition. For $r=2$, Hall's theorem suffices.
+For $r\ge3$, we average clique packings over random
+vertex samples to construct a fractional matching
+with small weighted codegrees. Kahn's matching
+theorem~\cite{KahnLP} then gives a partial list
+colouring covering almost all vertices, and reserved
+colours are used to colour the remaining vertices.
+
+Finally, we apply Proposition~\ref{prop:lifting}
+to the complement of $G(n,p)$.
+Using first-moment and Janson estimates, we show
+that its hypotheses hold after deleting a negligible
+number of vertices, completing the proof when
+$p$ approaches one.
+
+
+\section{Large independent sets}\label{sec:growing}
+
+We first treat the range in which the independent sets used for one colour have size tending to infinity.
+
+
+\begin{proposition}\label{prop:growing}
+If $p=p(n)\in(0,1)$ satisfies $np\to\infty$ and
+$\log(1/(1-p))=o(\log(np))$, then
+\[
+ \ch(G(n,p))=(1+\op(1))\chi(G(n,p)).
+\]
+\end{proposition}
+
+
+We follow the two-stage procedure of Krivelevich and Vu~\cite[proof of Theorem~3]{KV}. Lemmas~\ref{lem:uniform-independent} and~\ref{lem:KV} supply the two uniform graph properties needed for this procedure.
+
+We use the following asymptotic formula for the ordinary chromatic number.
+
+
+\begin{lemma}[{Bollob\'as~\cite{Bollobas1988},
+\L uczak~\cite{Luczak1991}, and
+Isaev and Kang~\cite{IK}}]\label{lem:ordinary}
+Suppose $p=p(n)\in(0,1)$ satisfies $np\to\infty$ and
+$\log(1/(1-p))=o(\log(np))$. Then
+\begin{equation}\label{eq:ordinary}
+ \chi(G(n,p))=(1+\op(1))
+ \frac{n\log(1/(1-p))}{2\log(np)}.
+\end{equation}
+\end{lemma}
+% Revision: lemma order and connecting paragraphs.
+{We next recall two probability inequalities that will turn the ordinary colouring estimate into an independent-set estimate valid in every sufficiently large vertex set. We first use the following graph form of bounded differences.}
+
+  
+\begin{lemma}[McDiarmid~{\cite[Lemma~(3.2)]{McDiarmid1989}}]\label{lem:bounded-differences}
+Let $F=G(m,p)$, where $m\ge1$ and $p\in[0,1]$, and let $f$ be a real-valued function on the graphs with vertex set $[m]$. Suppose $|f(F_1)-f(F_2)|\le1$ whenever $F_1$ and $F_2$ differ only in edges incident with one vertex. Then, for every $u\ge0$,
+\[
+ \Prob\bigl(|f(F)-\E f(F)|\ge u\bigr)
+ \le2\exp\left(-\frac{2u^2}{m}\right).
+\]
+\end{lemma}
+ 
+
+  {Bounded differences will give an exponentially small failure probability at a smaller graph order $m$. The following comparison lets us strengthen this estimate at a larger order $t$.}
+
+  
+\begin{lemma}[Bollob\'as~{\cite[Theorem~5]{BollobasICM1998}}]
+\label{lem:hereditary-comparison}
+Let $0<p<1$, and let $r,m,t$ be integers with $2\le r\le m\le t$. Then
+\[
+ \Prob\bigl(\alpha(G(t,p))<r\bigr)
+ \le
+ \Prob\bigl(\alpha(G(m,p))<r\bigr)^{t(t-1)/(m(m-1))}.
+\]
+\end{lemma}
+ 
+
+% Revision items 1
+  
+For fixed $p,r$, consider the graph property $\mathcal P_r=\{F:\alpha(F)<r\}$. If $F$ has this property, every induced subgraph of $F$ also has independence number less than $r$, so $\mathcal P_r$ is hereditary. By Bollob\'as~\cite[Theorem~5]{BollobasICM1998}, the quantity
+\[
+ -\frac{\log\Prob(G(j,p)\in\mathcal P_r)}{\binom j2}
+\]
+is nondecreasing in $j\ge2$. Comparing its values at $m$ and $t$ and exponentiating, we obtain the stated inequality. We apply the comparison separately for each $n$, keeping $p=p(n)$ and $r=r(n)$ the same at the two graph orders.
+ 
+
+  {We now combine Lemma~\ref{lem:ordinary} with the two probability inequalities to prove the required uniform estimate. The bound $\alpha(F)\ge |V(F)|/\chi(F)$ suggests the independent-set size in the statement.}
+
+  
+\begin{lemma}\label{lem:uniform-independent}
+Suppose $d=np\to\infty$ and $\log(1/q)=o(\log d)$. Fix $\varepsilon\in(0,1)$, and put
+\[
+ r=\left\lfloor(1-\varepsilon)
+              \frac{2\log d}{\log(1/q)}\right\rfloor.
+\]
+With high probability, every vertex set of size at least $n/(\log d)^4$ in $G(n,p)$ contains an independent set of $r$ vertices.
+\end{lemma}
+ 
+
+\begin{proof}[Proof of Lemma~\ref{lem:uniform-independent}]
+% Revision items 2
+  
+At graph order $t$ of size $n/(\log d)^4$, an estimate of the form $\exp(-ct)$, with fixed $c>0$, would not suffice for a union bound over $2^n$ vertex sets. We instead prove an estimate $\exp(-cm)$ at a smaller graph order $m$ and apply Lemma~\ref{lem:hereditary-comparison} to obtain an exponent of order $-t^2/m$. Retain $r$ and $\varepsilon$ from the statement, and put
+ 
+\[
+ t=\left\lceil\frac{n}{(\log d)^4}\right\rceil,
+ \qquad
+ m=\left\lfloor\frac{n}{(\log d)^{10}}\right\rfloor.
+\]
+% Revision items 2
+  
+The exponent $10$ is larger than $2\cdot4$, so these orders satisfy $t^2/m\ge n(\log d)^2$. At the same time, the reduction from $n$ to $m$ preserves the conditions for the ordinary chromatic-number estimate. Indeed, let $F=G(m,p)$. We have
+ 
+\[
+ mp=(1+o(1))\frac{d}{(\log d)^{10}}\to\infty,
+ \qquad
+ \log(mp)=\log d-10\log\log d+o(1).
+\]
+In particular, $\log(mp)=(1+o(1))\log d$. Also $r\to\infty$ by the assumption on $q$. Since $\log(1/q)\ge p$, we have
+\[
+ \frac rm\le\frac{2\log d}{m\log(1/q)}
+ \le\frac{2\log d}{mp}\longrightarrow0.
+\]
+Thus $2\le r\le m<t$ eventually, and $\log(1/q)=o(\log(mp))$.
+
+We need $F$ to be $k$-colourable with high probability while $kr$ stays below $m$ by a fixed proportion. Set
+\[
+ k=\left\lfloor(1-\varepsilon/2)\frac mr\right\rfloor
+ =(1+o(1))\frac{1-\varepsilon/2}{1-\varepsilon}
+       \frac{m\log(1/q)}{2\log(mp)}.
+\]
+Here $k\to\infty$ because $r/m\to0$. Since $(1-\varepsilon/2)/(1-\varepsilon)>1$, we may apply Lemma~\ref{lem:ordinary} at graph order $m$ and with the same probability $p=p(n)$ to conclude that $\chi(F)\le k$ with high probability.   {The definition of $k$ also ensures $kr\le(1-\varepsilon/2)m$.}
+
+Following Frieze's vertex-deletion argument as presented in \cite[p.~154]{McDiarmid1989}, let $Y$ be the minimum number of vertices whose deletion makes $F$ $k$-colourable. Then $\Prob(Y=0)\to1$ and $\E Y\le m\Prob(Y>0)=o(m)$. Changing edges at one vertex changes $Y$ by at most one, because a deletion set for either graph works for the other after that vertex is also deleted.
+
+If $\alpha(F)<r$, the $m-Y$ remaining vertices lie in at most $k$ independent sets of size at most $r-1$. Thus $m-Y\le k(r-1)<kr$, so
+\[
+ Y>m-kr\ge\varepsilon m/2.
+\]
+For sufficiently large $m$, we have $\E Y\le\varepsilon m/4$. By Lemma~\ref{lem:bounded-differences},
+\begin{equation}\label{eq:small-graph-tail}
+ \begin{aligned}
+ \Prob(\alpha(F)<r)
+ &\le\Prob(Y-\E Y\ge\varepsilon m/4)\\
+ &\le2e^{-\varepsilon^2m/8}
+ \le e^{-\varepsilon^2m/16}.
+ \end{aligned}
+\end{equation}
+
+Applying Lemma~\ref{lem:hereditary-comparison} with these values of $p,r,m,t$, we obtain
+\[
+ \Prob\bigl(\alpha(G(t,p))<r\bigr)
+ \le\exp\left(-\frac{\varepsilon^2}{16}
+                       \frac{t(t-1)}{m-1}\right).
+\]
+Since $m\le t$ and the definitions of $m,t$ use a floor and a ceiling,
+\[
+ \frac{t(t-1)}{m-1}
+ \ge\frac{t^2}{m}
+ \ge\frac{(n/(\log d)^4)^2}{n/(\log d)^{10}}
+ =n(\log d)^2.
+\]
+For each fixed $t$-vertex set $U\subseteq[n]$, the induced graph $G(n,p)[U]$ has the distribution $G(t,p)$. A union bound over at most $2^n$ such sets shows that the probability that some $U$ has no independent set of order $r$ is at most
+\[
+ \exp\left(n\log2-\frac{\varepsilon^2}{16}n(\log d)^2\right)
+ =o(1).
+\]
+Every set of size at least $n/(\log d)^4$ contains a $t$-vertex set, so this proves the lemma.
+\end{proof}
+
+Once every colour occurs in few lists, we use the completion lemma of Krivelevich and Vu.
+
+\begin{lemma}[Krivelevich and Vu~{\cite[Lemma~3.1]{KV}}]\label{lem:KV}
+Suppose $0<p<1$ and $d=np\to\infty$. With high probability, the following assertion holds simultaneously for every $U\subseteq V(G)$ and every list assignment on $U$, where $G=G(n,p)$. If each vertex has at least $\lceil d/(\log d)^2\rceil$ colours and each colour occurs in at most $n/(\log d)^4$ lists, then $G[U]$ has a proper list colouring.
+\end{lemma}
+
+  
+The deterministic statement of Krivelevich and Vu~\cite[Lemma~3.1]{KV} applies to graphs with specified uniform edge-distribution properties. To obtain the stated integer version, first shorten every list to $D=\lceil d/(\log d)^2\rceil$ colours. Fix a graph satisfying the uniform edge-distribution properties in \cite[Lemmas~2.1, 2.3 and~2.4]{KV}, and also the property in their Lemma~2.2 when $B:=n(\log d)^4/d^{3/2}\ge1$. For any $U$ and any such list assignment, the proof of their Lemma~3.1 constructs a proper colouring from these graph properties. The event on which the properties hold depends only on $G$, so the conclusion holds for all $U$ and all admissible list assignments on the same event.
+
+To check when the density hypothesis in their Lemma~2.2 is needed, we describe the sets used in the proof of their Lemma~3.1 on pp.~11--12 of the author version. Put $U_c=\{v\in U:c\in L(v)\}$, call $(v,c)$ dangerous when $v\in U_c$ has degree at least $d/(\log d)^3$ in $G[U_c]$, and let $W$ consist of vertices involved in at least $D/2$ dangerous pairs. By their Lemma~2.3, $|W|\le20n(\log d)^3/d$. Put $T_0=\{v\in U\setminus W:|N_G(v)\cap W|\ge\sqrt d\}$, where $N_G(v)$ is the set of neighbours of $v$ in $G$. By their Lemma~2.4, $|T_0|\le B$. If $B<1$, then $T_0$ is empty; we take $T=\varnothing$ and omit the step that uses Lemma~2.2. If $B\ge1$, the source proof uses that lemma to enlarge $T_0$ to a set $T$ of size $O(B)$ that can be coloured first and into which every outside vertex has fewer than ten neighbours. In this case $d^{3/2}\le n(\log d)^4$, and hence
+\[
+ p=\frac dn\le n^{-1/3}(\log n)^{8/3}=n^{-1/3+o(1)}.
+\]
+Thus their Lemma~2.2 is available whenever this step is needed. The required graph properties hold with probability tending to one by \cite[Lemmas~2.1--2.4]{KV}.
+
+The integer list size $D$ is sufficient throughout the same construction. With the threshold $D/2$ in the definition of $W$, the factor $D$ cancels from the count that bounds $|W|$. Every nonempty subgraph of $G[T]$ has a vertex of degree at most eight, so we can first colour $T$ in reverse deletion order, since $D\ge9$ for sufficiently large $d$. An outside list then loses at most ten colours. Every nonempty subgraph of $G[W\setminus T]$ has a vertex of degree at most $2(\log d)^6$, so we can colour these vertices in reverse deletion order because $D-10\ge2(\log d)^6+1$ for sufficiently large $d$. At any remaining vertex, deleting the colours used on neighbours in $W$ costs at most $\sqrt d$ further colours, and deleting its dangerous colours costs at most $D/2$. Consequently its list still has at least
+\[
+ \frac D2-\sqrt d-10
+ =D\left(\frac12-\frac{\sqrt d+10}{D}\right)
+ \ge\left\lfloor\frac D3\right\rfloor
+\]
+colours for sufficiently large $d$, since $(\sqrt d+10)/D\to0$. Set $\ell=\lfloor D/3\rfloor$ and shorten these lists to $\ell$ colours. For each retained colour $c$, the subgraph induced by the remaining vertices whose lists contain $c$ has maximum degree less than $d/(\log d)^3$. Since $d/(\log d)^3\le\ell/6$ for sufficiently large $d$, we can apply the graph case of \cite[Lemma~2.7]{KV} to finish the colouring. This verifies the ceiling in the stated threshold without imposing any additional loss of colours.
+ 
+
+\begin{proof}[Proof of Proposition~\ref{prop:growing}]
+Fix $\varepsilon\in(0,1)$ and use $r$ from Lemma~\ref{lem:uniform-independent}. Work on the common event from Lemmas~\ref{lem:uniform-independent} and~\ref{lem:KV}, which has probability tending to one. The argument below works for every list assignment on this event.
+
+Assign every vertex a list whose size is
+\[
+ \left\lfloor\frac nr\right\rfloor
+ +\left\lceil\frac{d}{(\log d)^2}\right\rceil.
+\]
+These two terms cover the successive independent sets and the final completion, respectively.
+
+As long as some colour $c$ appears in the lists of at least $n/(\log d)^4$ uncoloured vertices, use Lemma~\ref{lem:uniform-independent} to choose an independent set of $r$ of these vertices. Give them colour $c$, and remove $c$ from all remaining lists. Each step colours $r$ new vertices, so there are at most $\lfloor n/r\rfloor$ steps, each removing at most one entry from any remaining list.
+
+% Revision items 6
+  
+When the procedure stops, let $U$ be the set of uncoloured vertices. Each updated list on $U$ still has at least $\lceil d/(\log d)^2\rceil$ colours, and every colour occurs in fewer than $n/(\log d)^4$ of these lists. Applying Lemma~\ref{lem:KV} to $G[U]$ and the updated lists, we obtain a proper list colouring of the remaining vertices. Every colour used in the first stage was deleted from all lists of vertices still uncoloured at that step. Thus the two stages use disjoint sets of colours, and their colourings together form a proper list colouring of $G$. We have proved
+ 
+\[
+ \ch(G(n,p))\le\frac nr+\frac{d}{(\log d)^2}+O(1).
+\]
+
+Since $\log(1/q)\ge p$,
+\[
+ \frac{d/(\log d)^2}{n\log(1/q)/(2\log d)}
+ \le\frac{2}{\log d}\longrightarrow0.
+\]
+Moreover, $r\to\infty$ and the target bound is at least $d/(2\log d)\to\infty$, so the rounding errors have relative size $o(1)$. Therefore
+\[
+ \ch(G(n,p))
+ \le\left(\frac{1}{1-\varepsilon}+o(1)\right)
+   \frac{n\log(1/q)}{2\log d}.
+\]
+Since this holds for each fixed $\varepsilon>0$, we obtain the required asymptotic upper bound by first letting $n\to\infty$ and then $\varepsilon\downarrow0$. The reverse bound follows from $\chi\le\ch$ and Lemma~\ref{lem:ordinary}.
+\end{proof}
+
+\section{From clique partitions to list colourings}\label{sec:lifting}
+
+To prove Theorem~\ref{prop:lifting}, we first show that a bound on the number of lists containing each colour permits a proper partial list colouring of $\ov H$, meaning a colouring of a subset of its vertices from their lists. We then obtain that bound from the given clique partition and reserve colours to finish the colouring.
+
+When a colour occurs in at most $sD$ lists, grouping its available vertices into $s$-cliques uses at most $D$ such cliques, apart from a $K_s$-free remainder. The following lemma selects disjoint cliques with distinct allowed colours and covers almost all vertices.
+
+\begin{lemma}\label{lem:partial}
+Fix an integer $s\ge1$. Consider any sequence of graphs $H$ with $N\ge1$ vertices and lists of at least $D$ colours, where $D$ is a positive integer and $N,D$ may vary. Suppose that every colour occurs in at most $sD$ lists and that $\alpha_s(H)/D\to0$. Then $\ov H$ has a proper partial list colouring leaving $o(N)$ vertices uncoloured. Every used colour class is a singleton or an $s$-clique of $H$. The fraction left uncoloured tends to zero uniformly over $N,D$, the graph and the lists as $\alpha_s(H)/D\to0$; no further relation between $N$ and $D$ is assumed.
+\end{lemma}
+
+For $s\ge2$, we use Kahn's weighted matching theorem. Our auxiliary hypergraph has both original vertices and colour vertices; we only need to cover almost all original vertices. We therefore state the theorem for a specified set $X$. A hypergraph is a finite family of nonempty subsets, called edges, of a vertex set. A matching is a collection of pairwise disjoint edges. For nonnegative edge weights $w$, write $d_w(x)=\sum_{e\ni x}w(e)$ and $d_w(x,y)=\sum_{e\supseteq\{x,y\}}w(e)$ for distinct vertices $x,y$. A fractional matching satisfies $d_w(x)\le1$ at every vertex.
+
+\begin{theorem}[Kahn~{\cite[Theorem~1.5]{KahnLP}}, in the form used here]
+\label{thm:kahn}
+Consider any sequence of finite hypergraphs $\mathcal H$ with nonempty edges whose sizes are bounded by a fixed integer. Let $w$ be a fractional matching. Let $X\subseteq V(\mathcal H)$, where $|X|\to\infty$. Suppose
+\[
+ \min_{x\in X}\sum_{e\ni x}w(e)=1-o(1),
+ \qquad
+ \max_{\substack{x,y\in V(\mathcal H)\\x\ne y}}
+      \sum_{e\supseteq\{x,y\}}w(e)=o(1).
+\]
+Then there are matchings, one in each hypergraph, covering $|X|-o(|X|)$ vertices of $X$.
+\end{theorem}
+
+To obtain this form from Kahn~\cite[Theorem~1.5]{KahnLP}, let $b$ be a fixed upper bound on edge sizes, discard zero-weight edges and edges disjoint from $X$, and take the edge function $f(e)=|e\cap X|$. The total fractional value satisfies
+\[
+ \mu=\sum_e f(e)w(e)
+ =\sum_{x\in X}d_w(x)
+ =(1+o(1))|X|\longrightarrow\infty.
+\]
+Since $1\le f(e)\le b$, we also have
+\[
+ \sum_e f(e)^2w(e)\le b\mu=o(\mu^2).
+\]
+  {We have verified the moment hypothesis $\sum_e f(e)^2w(e)=o(\mu^2)$ in Kahn's theorem. The required weighted codegree bound is also one of our assumptions.} We obtain a matching $M$ with $\sum_{e\in M}f(e)=(1+o(1))\mu$. Its edges are disjoint, so this sum is the number of vertices of $X$ that it covers, which is $|X|-o(|X|)$.
+
+\begin{proof}[Proof of Lemma~\ref{lem:partial}]
+Shorten all lists to size $D$. Suppose first that $s=1$, and fix $W\subseteq V(H)$. Each vertex of $W$ has $D$ allowed colours, whereas each colour occurs in at most $D$ lists. We count the pairs $(v,c)$ with $v\in W$ and $c\in L(v)$ first by vertices and then by colours to obtain
+\[
+ D|W|
+ =\sum_{c\in\bigcup_{v\in W}L(v)}
+       |\{v\in W:c\in L(v)\}|
+ \le D\left|\bigcup_{v\in W}L(v)\right|.
+\]
+After dividing by $D$, we have Hall's condition for every $W$. We may therefore apply Hall's theorem~\cite{Hall1935} to choose pairwise distinct colours $c(v)\in L(v)$ and colour all vertices.
+ 
+If $N\le D$, we can also give all vertices distinct colours greedily. We may therefore assume $s\ge2$ and $N>D$.
+
+Let $C=\bigcup_vL(v)$, treating colours as vertices disjoint from $V(H)$. For each $c\in C$, put $S_c=\{v:c\in L(v)\}$, so $|S_c|\le sD$. For an $s$-clique or singleton $Q\subseteq S_c$, the edge $Q\cup\{c\}$ represents colouring $Q$ with $c$. The colour vertex prevents two selected cliques from using the same colour. A matching of such edges gives disjoint cliques with distinct allowed colours, hence a proper partial list colouring of $\ov H$. We construct a weighted family of these edges by sampling.
+
+Sampling will make the weighted codegrees of pairs of original vertices small. If each vertex is selected independently with probability $\rho$, the inclusion probabilities of a vertex and a pair are $\rho$ and $\rho^2$. For each colour, we pack the sampled set with $s$-cliques and keep the remaining vertices as singletons. The expected number of $s$-cliques is at most $\rho|S_c|/s\le\rho D$, and the number of singletons is at most $\alpha_s(H)$. After normalizing the weights, we therefore need both $\rho$ and $\alpha_s(H)/(\rho D)$ to be small. Choose
+\[
+ \rho=\sqrt{\frac{\alpha_s(H)}D}=o(1),
+ \qquad
+ \frac{\alpha_s(H)}{\rho D}=\rho.
+\]
+Since $s\ge2$ and $N\ge1$, we have $\alpha_s(H)\ge1$. Thus $D^{-1}\le\rho^2$, so eventually $0<\rho<1$ and $D,N\to\infty$.
+
+  
+Include each vertex independently in a random set $U$ with probability $\rho$. For each colour $c$, use a fixed greedy rule to take disjoint $s$-cliques from $H[S_c\cap U]$ until no further one can be taken. Write $B_c$ for the remaining set. This set is $K_s$-free, so $|B_c|\le\alpha_s(H)=\rho^2D$; keep its vertices as singletons. Let $\mathcal P_c$ be the resulting partition of $S_c\cap U$. Keeping the singletons ensures that every selected vertex appears in one part for each of its allowed colours. We can therefore calculate the weighted degrees at original vertices exactly, even when the clique packing leaves vertices uncovered. To count the parts, there are $(|S_c\cap U|-|B_c|)/s$ cliques and $|B_c|$ singleton parts. Consequently,
+\[
+ |\mathcal P_c|
+ =\frac{|S_c\cap U|-|B_c|}{s}+|B_c|
+ \le\frac{|S_c\cap U|}{s}+\alpha_s(H).
+\]
+Taking expectations and using $\E|S_c\cap U|=\rho|S_c|$ and $|S_c|\le sD$, we obtain
+\[
+ \E|\mathcal P_c|
+ \le\frac{\rho|S_c|}{s}+\rho^2D
+ \le\rho(1+\rho)D.
+\]
+ 
+We use this same upper bound to normalize the weights for every colour. It will keep the weighted degree of each colour vertex at most one while giving the same weighted degree at every original vertex.
+
+Averaging over all outcomes of $U$ defines a fixed weighted hypergraph on all original vertices and colours. For every $c$ and every $Q$ with $\Prob(Q\in\mathcal P_c)>0$, include $Q\cup\{c\}$ in a hypergraph $\mathcal H$ on $V(H)\cup C$, with weight
+\[
+ w(Q\cup\{c\})
+ =\frac{\Prob(Q\in\mathcal P_c)}{\rho(1+\rho)D}.
+\]
+A matching may combine cliques obtained from different samples, since each edge separately gives a legal colour class.
+
+For each of its $D$ colours $c$, an original vertex $v$ belongs to exactly one member of $\mathcal P_c$ if $v\in U$, and to none otherwise. For a colour vertex $c$, the partition contributes $|\mathcal P_c|$ edges. Hence
+\[
+ \sum_{e\ni v}w(e)
+ =\frac{D\rho}{\rho(1+\rho)D}
+ =\frac1{1+\rho},
+ \qquad
+ \sum_{e\ni c}w(e)
+ =\frac{\E|\mathcal P_c|}{\rho(1+\rho)D}\le1.
+\]
+Thus $w$ is a fractional matching whose weighted degrees at original vertices tend uniformly to one.
+
+Two original vertices have at most $D$ common colours. For them to lie in one member of $\mathcal P_c$, both must belong to $U$, an event of probability $\rho^2$. Their weighted codegree is therefore at most
+\[
+ \frac{D\rho^2}{\rho(1+\rho)D}
+ =\frac{\rho}{1+\rho}\le\rho.
+\]
+An original vertex and a colour have weighted codegree at most $\rho/[\rho(1+\rho)D]\le1/D\le\rho$. Two colour vertices have codegree zero, since every edge contains exactly one colour. All edges have size at most $s+1$.
+
+Apply Theorem~\ref{thm:kahn} with $X=V(H)$. We have $N\to\infty$, every weighted degree on $X$ is $1/(1+\rho)$, and all weighted codegrees tend to zero. The resulting matching covers $N-o(N)$ original vertices and gives the required partial colouring. Each used colour class is a singleton or an $s$-clique of $H$.
+
+To verify uniformity, suppose that for some fixed $\eta>0$ there were a sequence of admissible graphs and lists with $\alpha_s(H)/D\to0$ for which every permitted partial colouring left at least $\eta N$ vertices uncoloured. The cases $s=1$ and $N\le D$ admit complete colourings. In the remaining case, $\alpha_s(H)\ge1$ implies $D\to\infty$ and $N>D\to\infty$, so the preceding application of Theorem~\ref{thm:kahn} contradicts the assumed lower bound $\eta N$. This proves the uniform conclusion.
+\end{proof}
+
+We now obtain the bound on colour occurrences needed in Lemma~\ref{lem:partial}. We first colour a whole part whenever its vertices have a common colour, a reduction used by Reed and Sudakov~\cite[proof of Theorem~1]{ReedSudakov2002}. When the process stops, every colour is absent from at least one vertex in each remaining part.   {We can then apply Lemma~\ref{lem:partial} to choose new cliques as colour classes, and these cliques may cross the original parts.} We keep a common reserve of colours for the vertices it leaves uncoloured.
+
+\begin{proof}[Proof of Theorem~\ref{prop:lifting}]
+  
+Fix an integer $r\ge2$, let $H=H_n$ have $n$ vertices with $\alpha_{r-1}(H)=o(n)$, and fix the given partition of $V(H)$ into $k$ cliques, each of size at most $r$. We colour $\ov H$, so every part of this partition is an independent set in the graph being coloured. Fix $\varepsilon\in(0,1)$ and give every vertex an arbitrary list of $k+\lceil4\varepsilon n\rceil$ colours. The extra $\lceil4\varepsilon n\rceil$ colours will allow us to reserve between $\varepsilon n$ and $3\varepsilon n$ colours per remaining list while retaining a margin of at least $\lceil\varepsilon n\rceil$ colours for the partial colouring. As long as a part has a colour common to all its vertices, give that colour to the whole part, remove the part and delete the colour from every remaining list. Each coloured part is independent in $\ov H$, and different removed parts use distinct colours, so these steps produce a proper colouring of the removed vertices. If all vertices are coloured, we are done.
+ 
+
+  
+Let $\mathcal P'$ be the family of remaining parts, put $k'=|\mathcal P'|$, and let $H'$ be the subgraph induced by their union. For each remaining vertex $v$, let $L(v)$ now denote its list after the deletion of all colours used on the removed parts. We used $k-k'$ distinct colours, so $|L(v)|\ge k'+\lceil4\varepsilon n\rceil$. For each remaining colour $c$, put $S_c=\{v\in V(H'):c\in L(v)\}$. No part $P\in\mathcal P'$ has a colour common to all its vertices. Hence $c$ is absent from the list of at least one vertex in $P$, and
+\[
+ |S_c\cap P|\le |P|-1\le r-1,
+ \qquad
+ |S_c|=\sum_{P\in\mathcal P'}|S_c\cap P|
+       \le(r-1)k'.
+\]
+Shorten all remaining lists to size $k'+\lceil4\varepsilon n\rceil$. This can only reduce the number of occurrences of any colour. Continue to write $L(v)$ for these shortened lists and $S_c$ for the corresponding sets of vertices.
+ 
+
+  
+Put $D=k'+\lceil\varepsilon n\rceil$. We seek a common reserve $R$ containing at least $\varepsilon n$ colours in each list, so that we can finish the uncoloured vertices with distinct colours from $R$, and at most $3\varepsilon n$ colours in each list, so that at least $D$ colours remain available for the partial colouring. To make both bounds hold simultaneously, place each remaining colour in $R$ independently with probability $2\varepsilon n/(k'+\lceil4\varepsilon n\rceil)$. For each vertex, the number of reserved colours is binomial with mean $2\varepsilon n$, the midpoint of the target interval $[\varepsilon n,3\varepsilon n]$.
+ 
+For a binomial random variable $X$ with mean $\mu>0$, the Chernoff bound~\cite[Corollary~2.3]{JLR} states that
+\[
+ \Prob\bigl(|X-\mu|\ge\mu/2\bigr)\le2e^{-\mu/12}.
+\]
+Applying this with $\mu=2\varepsilon n$ and taking a union bound over the remaining lists, we find that, with probability at least $1-2n\exp(-\varepsilon n/6)=1-o(1)$,
+\begin{equation}\label{eq:reserve}
+ \varepsilon n\le |L(v)\cap R|\le3\varepsilon n
+ \qquad(v\in V(H')).
+\end{equation}
+For large $n$, such a set $R$ therefore exists; fix one.
+
+  
+Since $|L(v)\cap R|$ is an integer, its upper bound in~\eqref{eq:reserve} is at most $\lfloor3\varepsilon n\rfloor$. Thus
+\[
+ |L(v)\setminus R|
+ \ge k'+\lceil4\varepsilon n\rceil-\lfloor3\varepsilon n\rfloor
+ \ge k'+\lceil\varepsilon n\rceil=D.
+\]
+For the second inequality, $\lceil4\varepsilon n\rceil-\lfloor3\varepsilon n\rfloor$ is an integer at least $\varepsilon n$, and hence is at least $\lceil\varepsilon n\rceil$.
+ 
+Each colour occurs in at most $(r-1)k'\le(r-1)D$ of these lists, and
+\[
+ D\ge\varepsilon n,
+ \qquad
+ \frac{\alpha_{r-1}(H')}{D}
+ \le\frac{\alpha_{r-1}(H)}{\varepsilon n}=o(1).
+\]
+  
+Put $N=|V(H')|$ and apply Lemma~\ref{lem:partial} to $H'$, with $s=r-1$, the integer $D$ above and the non-reserved lists $L(v)\setminus R$. Each list has at least $D$ colours, each colour occurs in at most $(r-1)D$ lists, and $\alpha_{r-1}(H')/D\to0$. For every fixed $\eta>0$, the uniform conclusion allows us to choose a partial colouring leaving at most $\eta N\le\eta n$ vertices uncoloured for all sufficiently large $n$, independently of the value of $N$. Thus the minimum possible number of uncoloured vertices is $o(n)$, and we choose a partial colouring with this property.
+ 
+
+Each remaining vertex has at least $\varepsilon n$ colours in $R$. The colours used on whole parts were deleted before $R$ was chosen, and the partial colouring used only colours outside $R$. Hence no colour in a remaining reserve list has been used. For sufficiently large $n$, fewer than $\varepsilon n$ vertices remain, so we can give them distinct colours from $R$ greedily. We have proved $\ch(\ov H)\le k+\lceil4\varepsilon n\rceil$ for every fixed $\varepsilon>0$ under the stated asymptotic hypothesis.
+
+To obtain the quantitative statement with error $\eta n$, fix $0<\varepsilon<\min\{1,\eta/8\}$. By the uniform conclusion of Lemma~\ref{lem:partial}, choose $\tau>0$, depending only on $r$ and $\varepsilon$, such that $\alpha_{r-1}(H')/D\le\tau$ guarantees that fewer than $\varepsilon|V(H')|$ vertices remain uncoloured. Put $\delta=\varepsilon\tau$. If $\alpha_{r-1}(H)\le\delta n$, then $D\ge\varepsilon n$ ensures $\alpha_{r-1}(H')/D\le\tau$. Increase $n_0$ so that the reserve exists and $\lceil4\varepsilon n\rceil\le\eta n$ for every $n\ge n_0$.
+  
+Apply Lemma~\ref{lem:partial} to the lists outside $R$ as above. The resulting partial colouring leaves fewer than $\varepsilon|V(H')|\le\varepsilon n$ vertices uncoloured. Every such vertex still has at least $\varepsilon n$ unused allowed colours in $R$, so we can colour these vertices greedily with pairwise distinct colours. The resulting colouring of $\ov H$ is proper, because it uses allowed colours, its new colour classes are singletons, and no reserved colour was used in either earlier stage. We have therefore coloured $\ov H$ from every initial list assignment of size $k+\lceil4\varepsilon n\rceil$, and hence
+\[
+ \ch(\ov H)\le k+\lceil4\varepsilon n\rceil\le k+\eta n.
+\]
+All thresholds were chosen using only $r$ and $\eta$, so this bound is uniform over $H$ and its given partition.
+ 
+\end{proof}
+
+\section{Proof of the main theorem}\label{sec:proof}
+
+Proposition~\ref{prop:growing} and Theorem~\ref{prop:lifting} provide the two colouring arguments. We now establish the random complement estimates needed for the latter and combine the two cases.
+
+We need larger cliques to occupy few vertices, and smaller cliques to occur in every set containing a fixed positive fraction of the vertices. We establish both estimates in the following lemma.
+
+\begin{lemma}\label{lem:random-cliques}
+Fix an integer $s\ge2$, and let $H=G(n,q)$, where $q=q(n)\in[0,1]$. Let $Z$ be the set of vertices of $H$ that lie in a $K_s$. If $qn^{2/s}\to0$, then
+\begin{equation}\label{eq:rare-cliques}
+ |Z|=\op(n).
+\end{equation}
+If $qn^{2/s}\to\infty$, then
+\begin{equation}\label{eq:random-cliques}
+ \alpha_s(H)=\op(n).
+\end{equation}
+\end{lemma}
+
+The first estimate uses the first moment method. For the second, we use a union bound and the following form of Janson's inequality, which is the case $X=0$ of \cite[Theorem~2.14]{JLR}.
+
+\begin{lemma}[  {Janson, \L uczak and Ruci\'nski~{\cite[Theorem~2.14]{JLR}}}]\label{lem:janson}
+Let $\Omega$ be a finite set, and let $\Omega_q$ include each element of $\Omega$ independently with probability $q\in[0,1]$. Let $\mathcal A$ be a finite family of nonempty subsets of $\Omega$. For $A\in\mathcal A$, let $I_A$ be one when $A\subseteq\Omega_q$ and zero otherwise. Put
+\[
+ X=\sum_{A\in\mathcal A}I_A,\qquad
+ \mu=\E X>0,
+\]
+and define
+\[
+ \bar\Delta
+ =\sum_{\substack{A,B\in\mathcal A\\A\cap B\ne\varnothing}}
+    \E[I_AI_B].
+\]
+The sum is over ordered pairs, including the pairs with $A=B$. Then
+\[
+ \Prob(X=0)\le
+ \exp\left(-\frac{\mu^2}{2\bar\Delta}\right).
+\]
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{lem:random-cliques}]
+  
+First suppose $qn^{2/s}\to0$, and let $N_s$ be the number of copies of $K_s$ in $H$. Each $s$-element vertex set induces a clique with probability $q^{\binom s2}$. Since a vertex may lie in more than one such clique, the total number $sN_s$ of vertex occurrences is at least $|Z|$. Therefore
+\[
+ \E|Z|\le s\E N_s=s\binom nsq^{\binom s2}
+ \le sn\bigl(qn^{2/s}\bigr)^{\binom s2}=o(n).
+\]
+For every fixed $\varepsilon>0$, we may apply Markov's inequality to obtain
+\[
+ \Prob(|Z|>\varepsilon n)
+ \le\frac{\E|Z|}{\varepsilon n}\longrightarrow0.
+\]
+This is the convergence in probability asserted in~\eqref{eq:rare-cliques}.
+ 
+
+Now suppose $qn^{2/s}\to\infty$. Fix $\varepsilon\in(0,1)$ and a set $U\subseteq[n]$ of $m=\lceil\varepsilon n\rceil$ vertices. Apply Lemma~\ref{lem:janson} with $\Omega=\binom U2$ and with $\mathcal A$ consisting of the edge sets of all possible $s$-cliques on $U$. Thus
+\[
+ \mu=\binom msq^{\binom s2}.
+\]
+  
+Two clique edge sets intersect exactly when their vertex sets have at least two common vertices. For an ordered pair whose vertex sets meet in exactly $j$ vertices, first choose the first $s$-element set, then the $j$ shared vertices in it, and then the remaining $s-j$ vertices of the second set outside it. There are $\binom ms\binom sj\binom{m-s}{s-j}$ such pairs, and their union requires $2\binom s2-\binom j2$ distinct edges. Thus only $2\le j\le s$ contribute to $\bar\Delta$, with $j=s$ including the diagonal pairs, and
+\[
+ \bar\Delta
+ =\sum_{j=2}^{s}\binom ms\binom sj\binom{m-s}{s-j}
+       q^{\,2\binom s2-\binom j2}.
+\]
+Dividing by $\mu^2=\binom ms^2q^{2\binom s2}$, we obtain
+\[
+ \frac{\bar\Delta}{\mu^2}
+ =\sum_{j=2}^{s}
+    \frac{\binom sj\binom{m-s}{s-j}}{\binom ms}
+       q^{-\binom j2}
+ \le C_s\sum_{j=2}^{s}\frac1{m^jq^{\binom j2}},
+\]
+where the binomial coefficient ratio in the $j$th term is at most $C_sm^{-j}$ for fixed $s$ and sufficiently large $m$. Since $m=(1+o(1))\varepsilon n$, it follows that
+\[
+ \frac{\bar\Delta}{\mu^2}
+ \le C_{s,\varepsilon}\sum_{j=2}^{s}
+       \frac1{n^jq^{\binom j2}},
+\]
+where $C_{s,\varepsilon}$ depends only on $s$ and $\varepsilon$.
+ 
+Each term is $o(1/n)$, because for $2\le j\le s$,
+\[
+ \frac{n^jq^{\binom j2}}n
+ =n^{(j-1)(s-j)/s}
+   \bigl(qn^{2/s}\bigr)^{\binom j2}\longrightarrow\infty.
+\]
+Here the exponent of $n$ is nonnegative and the last factor tends to infinity. Since $s$ is fixed, it follows that
+\[
+ \frac{\bar\Delta}{\mu^2}=o(1/n).
+\]
+
+By Janson's inequality, we have $\Prob(X=0)\le e^{-2n}$ for all sufficiently large $n$, uniformly over the choice of $U$. Taking a union bound over these sets, we obtain
+\[
+ \Prob\bigl(\text{some $m$-vertex set contains no $K_s$}\bigr)
+ \le2^ne^{-2n}=o(1).
+\]
+Thus $\alpha_s(G(n,q))<\lceil\varepsilon n\rceil$ with high probability. As $\varepsilon\in(0,1)$ was arbitrary, this proves $\alpha_s(G(n,q))=\op(n)$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+When $p=1$, the graph is complete and both numbers equal $n$. We may therefore restrict to indices with $0<p<1$; $np\to\infty$ excludes $p=0$ for all large $n$.
+
+It is enough to prove the theorem along any subsequence on which
+\[
+ \frac{2\log d}{\log(1/q)}\longrightarrow a\in[0,\infty],
+\]
+since the extended interval $[0,\infty]$ is compact. More precisely, if convergence in probability failed, there would be fixed $\eta,\delta>0$ and a subsequence on which the probability that the ratio exceeds $1+\eta$ is at least $\delta$. A further subsequence with the displayed parameter convergent would contradict either of the conclusions below. If $a=\infty$, Proposition~\ref{prop:growing} applies.
+
+Suppose now that $a<\infty$. Because $d\to\infty$ and the ratio has a finite limit, we have $\log(1/q)\to\infty$. Thus $p\to1$ and $d=(1+o(1))n$. Hence
+\[
+ \frac{2\log n}{\log(1/q)}\longrightarrow a.
+\]
+  {We need a fixed integer $r$ for which the vertices in $(r+1)$-cliques form a set of size $\op(n)$ and, with high probability, every set of any fixed positive relative size contains an $(r-1)$-clique. By Lemma~\ref{lem:random-cliques}, these two requirements follow from $qn^{2/(r+1)}\to0$ and, when $r\ge3$, $qn^{2/(r-1)}\to\infty$; for $r=2$, the second requirement is automatic because $\alpha_1=0$. The limiting value of $2\log n/\log(1/q)$ makes these limits valid when $a<r+1$ and, for $r\ge3$, $a>r-1$. We therefore take $r=\max\{2,\lfloor a\rfloor\}$.}
+By the definition of $r$, we have $a<r+1$, and also $a>r-1$ when $r\ge3$. These inequalities are strict even if $a$ is an integer. To check the required clique thresholds, first observe that
+\[
+ \frac{\log(qn^{2/(r+1)})}{\log(1/q)}
+ =\frac{2\log n}{(r+1)\log(1/q)}-1
+ \longrightarrow\frac{a}{r+1}-1<0.
+\]
+Since $\log(1/q)\to\infty$, we conclude that $\log(qn^{2/(r+1)})\to-\infty$ and hence $qn^{2/(r+1)}\to0$. For $r\ge3$, the same ratio with $r-1$ in place of $r+1$ has a positive limit, so $qn^{2/(r-1)}\to\infty$. Thus
+\begin{equation}\label{eq:window}
+ qn^{2/(r+1)}\to0,\qquad
+ qn^{2/(r-1)}\to\infty\quad\text{if }r\ge3.
+\end{equation}
+
+Let $H=\ov{G(n,p)}$, so $H$ has the distribution $G(n,q)$. Let $Z$ be the set of vertices that lie in a $K_{r+1}$ of $H$. By the first limit in~\eqref{eq:window}, we may apply Lemma~\ref{lem:random-cliques} with $s=r+1$ to obtain $|Z|=\op(n)$. For $r\ge3$, apply that lemma with $s=r-1$ and the second limit to obtain $\alpha_{r-1}(H)=\op(n)$. This also holds for $r=2$, because $\alpha_1(H)=0$.
+
+Put $H_0=H-Z$. Every clique of $H_0$ has at most $r$ vertices, and $\alpha_{r-1}(H_0)\le\alpha_{r-1}(H)$. On the event $|V(H_0)|\ge n/2$, which holds with high probability,
+\[
+ \frac{\alpha_{r-1}(H_0)}{|V(H_0)|}
+ \le\frac{2\alpha_{r-1}(H)}n=\op(1).
+\]
+For each fixed $\eta>0$, apply the quantitative form of Theorem~\ref{prop:lifting} with graph order $|V(H_0)|$ and its corresponding constants $\delta,n_0$. With probability tending to one, $|V(H_0)|\ge\max\{n/2,n_0\}$ and $\alpha_{r-1}(H_0)\le\delta|V(H_0)|$. An optimal clique partition then has $\chi(\ov{H_0})$ parts, each of size at most $r$, and
+\[
+ \ch(\ov{H_0})\le\chi(\ov{H_0})+\eta|V(H_0)|.
+\]
+Since $\eta$ is arbitrary and $|V(H_0)|\le n$, the difference $\ch(\ov{H_0})-\chi(\ov{H_0})$ is $\op(n)$.
+
+  
+Give every vertex of $\ov H$ an arbitrary list of $|Z|+\ch(\ov{H_0})$ colours. Order the vertices of $Z$ and choose an allowed colour for each in turn, excluding those already chosen there. At the $i$th vertex, fewer than $|Z|$ colours have been excluded and its list contains at least $|Z|$ colours, so we can assign distinct allowed colours to all vertices of $Z$. Delete these colours from the lists on $V(H_0)$. Each remaining list still has at least $\ch(\ov{H_0})$ entries, so we can properly colour $\ov{H_0}$ from them and combine the two colourings. Consequently,
+ 
+\[
+ \ch(\ov H)\le |Z|+\ch(\ov{H_0})
+ \le |Z|+\chi(\ov{H_0})+\op(n)
+ \le\chi(\ov H)+\op(n).
+\]
+Every colour class in $\ov{H_0}$ has at most $r$ vertices, so
+\[
+ \chi(\ov H)\ge\frac{n-|Z|}{r}.
+\]
+Thus $\chi(\ov H)$ is at least a positive constant times $n$ with high probability, and the additive error $\op(n)$ is a relative error $\op(1)$. Together with $\chi\le\ch$, this proves the theorem.
+\end{proof}
+
+\begin{thebibliography}{99}
+\small
+\raggedright
+
+\bibitem{Alon1993}
+N.~Alon, Restricted colorings of graphs, in \emph{Surveys in Combinatorics, 1993}, K.~Walker (ed.), London Mathematical Society Lecture Note Series \textbf{187}, Cambridge University Press, 1993, 1--33. \href{https://web.math.princeton.edu/~nalon/PDFS/british2.pdf}{Author version}.
+
+\bibitem{AKS}
+N.~Alon, M.~Krivelevich and B.~Sudakov, List coloring of random and pseudo-random graphs, \emph{Combinatorica} \textbf{19} (1999), 453--472. \href{https://doi.org/10.1007/s004939970001}{doi:10.1007/s004939970001}. \href{https://web.math.princeton.edu/~nalon/PDFS/colaks9.pdf}{Author version}.
+
+\bibitem{Bollobas1988}
+B.~Bollob\'as, The chromatic number of random graphs, \emph{Combinatorica} \textbf{8} (1988), 49--55. \href{https://doi.org/10.1007/BF02122551}{doi:10.1007/BF02122551}.
+
+\bibitem{BollobasICM1998}
+B.~Bollob\'as, Hereditary properties of graphs: asymptotic enumeration, global structure, and colouring, \emph{Documenta Mathematica}, Extra Volume ICM 1998, \textbf{III}, 333--342. \href{https://ems.press/content/book-chapter-files/27247?nt=1}{Publisher version}.
+
+\bibitem{FMPP2015}
+A.~Frieze, D.~Mitsche, X.~P\'erez-Gim\'enez and P.~Pra{\l}at, On-line list colouring of random graphs, \emph{Electronic Journal of Combinatorics} \textbf{22}(2) (2015), P2.41. \href{https://doi.org/10.37236/5003}{doi:10.37236/5003}. \href{https://arxiv.org/abs/1501.07469}{arXiv:1501.07469}.
+
+\bibitem{Hall1935}
+P.~Hall, On representatives of subsets, \emph{Journal of the London Mathematical Society} (1) \textbf{10} (1935), 26--30. \href{https://doi.org/10.1112/jlms/s1-10.37.26}{doi:10.1112/jlms/s1-10.37.26}.
+
+\bibitem{IK}
+M.~Isaev and M.~Kang, On the chromatic number in the stochastic block model, \emph{Electronic Journal of Combinatorics} \textbf{30}(2) (2023), P2.56. \href{https://doi.org/10.37236/10728}{doi:10.37236/10728}.
+
+\bibitem{JLR}
+S.~Janson, T.~\L uczak and A.~Ruci\'nski, \emph{Random Graphs}, Wiley-Interscience, New York, 2000. \href{https://doi.org/10.1002/9781118032718}{doi:10.1002/9781118032718}.
+
+\bibitem{KahnLP}
+J.~Kahn, A linear programming perspective on the Frankl--R\"odl--Pippenger theorem, \emph{Random Structures \& Algorithms} \textbf{8}(2) (1996), 149--157. \href{https://onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291098-2418%28199603%298%3A2%3C149%3A%3AAID-RSA5%3E3.0.CO%3B2-Y}{Publisher record}.
+
+\bibitem{Kierstead2000}
+H.~A.~Kierstead, On the choosability of complete multipartite graphs with part size three, \emph{Discrete Mathematics} \textbf{211} (2000), 255--259. \href{https://doi.org/10.1016/S0012-365X(99)00157-0}{doi:10.1016/S0012-365X(99)00157-0}.
+
+\bibitem{Krivelevich2000}
+M.~Krivelevich, The choice number of dense random graphs, \emph{Combinatorics, Probability and Computing} \textbf{9}(1) (2000), 19--26. \href{https://doi.org/10.1017/S0963548399004101}{doi:10.1017/S0963548399004101}. \href{https://www.math.tau.ac.il/~krivelev/26.pdf}{Author version}.
+
+\bibitem{KSVW2003}
+M.~Krivelevich, B.~Sudakov, V.~H.~Vu and N.~C.~Wormald, On the probability of independent sets in random graphs, \emph{Random Structures \& Algorithms} \textbf{22}(1) (2003), 1--14. \href{https://doi.org/10.1002/rsa.10063}{doi:10.1002/rsa.10063}. \href{https://people.math.ethz.ch/~sudakovb/probability-independent-set.pdf}{Author version}.
+
+\bibitem{KV}
+M.~Krivelevich and V.~H.~Vu, Choosability in random hypergraphs, \emph{Journal of Combinatorial Theory, Series B} \textbf{83}(2) (2001), 241--257. \href{https://doi.org/10.1006/jctb.2001.2053}{doi:10.1006/jctb.2001.2053}. \href{https://www.math.tau.ac.il/~krivelev/35.pdf}{Author version}.
+
+\bibitem{Luczak1991}
+T.~\L uczak, The chromatic number of random graphs, \emph{Combinatorica} \textbf{11} (1991), 45--54. \href{https://doi.org/10.1007/BF01375472}{doi:10.1007/BF01375472}.
+
+\bibitem{McDiarmid1989}
+C.~McDiarmid, On the method of bounded differences, in \emph{Surveys in Combinatorics, 1989}, J.~Siemons (ed.), London Mathematical Society Lecture Note Series \textbf{141}, Cambridge University Press, 1989, 148--188. \href{https://doi.org/10.1017/CBO9781107359949.008} {doi:10.1017/CBO9781107359949.008}.
+
+\bibitem{ReedSudakov2002}
+B.~Reed and B.~Sudakov, List colouring of graphs with at most $(2-o(1))\chi$ vertices, in \emph{Proceedings of the International Congress of Mathematicians}, Vol.~III (Beijing, 2002), Higher Education Press, Beijing, 2002, 587--603. \href{https://arxiv.org/abs/math/0304467}{arXiv:math/0304467}.
+
+\end{thebibliography}
+
+
+\end{document}
