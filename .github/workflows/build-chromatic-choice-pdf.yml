@@ -7,6 +7,10 @@ on:
       - ".github/workflows/build-chromatic-choice-pdf.yml"
   workflow_dispatch:
 
+concurrency:
+  group: chromatic-choice-pdf
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -28,7 +32,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.pdf
-          if ! git diff --cached --quiet; then
-            git commit -m "Build PDF for chromatic-choice random graph draft"
-            git push
+          if git diff --cached --quiet; then
+            echo "PDF already up to date."
+            exit 0
           fi
+          git commit -m "Build PDF for chromatic-choice random graph draft"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Retrying after concurrent repository update (attempt $attempt)"
+          done
+          echo "Could not push generated PDF after three attempts."
+          exit 1
