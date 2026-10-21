@@ -7,6 +7,31 @@ combinatorics.
 [Research webpage](https://lanchao-wang.github.io/) ·
 [Publications](https://lanchao-wang.github.io/publications.html)
 
+## Asymptotic equality of chromatic and choice numbers in random graphs
+
+**Lanchao Wang and Jiasheng Zeng**
+
+A research manuscript proving the Alon–Krivelevich–Sudakov conjecture on **list colouring of random graphs**. Whenever `np → ∞`, we show that the choice number and chromatic number of the binomial random graph `G(n,p)` are asymptotically equal:
+
+$
+\operatorname{ch}(G(n,p))=(1+o_{\mathbb P}(1))\chi(G(n,p)).
+$
+
+The proof handles growing and bounded colour classes separately. It combines uniform independent-set estimates and the Krivelevich–Vu method with a deterministic clique-partition-to-list-colouring proposition proved using random sampling of clique packings and Kahn's matching theorem. First-moment and Janson estimates complete the argument.
+
+[Read the draft overview](./drafts/chromatic-choice-random-graphs-20261022/) ·
+[Detailed research note and keywords](./drafts/chromatic-choice-random-graphs-20261022/README.md) ·
+[LaTeX manuscript](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.tex) ·
+[PDF manuscript](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.pdf)
+
+**Status:** Unrefereed research manuscript. Revised October 20, 2026; uploaded October 22, 2026.
+
+## Related search terms
+
+List colouring; list coloring; choice number; chromatic number; choosability; random graphs; Erdős–Rényi graph; G(n,p); Alon–Krivelevich–Sudakov conjecture; clique partitions; Kahn's matching theorem.
+
+---
+
 ## Current research draft
 
 ### Common independent sets in $K_{s_1}$-free, $\ldots$, $K_{s_k}$-free graphs
