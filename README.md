@@ -26,6 +26,8 @@ The proof handles growing and bounded colour classes separately. It combines uni
 
 **Status:** Unrefereed research manuscript. Revised October 20, 2026; uploaded October 22, 2026.
 
+**AI assistance:** This manuscript was prepared with the assistance of ChatGPT (GPT-6) under the authors' guidance.
+
 ## Related search terms
 
 List colouring; list coloring; choice number; chromatic number; choosability; random graphs; Erdős–Rényi graph; G(n,p); Alon–Krivelevich–Sudakov conjecture; clique partitions; Kahn's matching theorem.
