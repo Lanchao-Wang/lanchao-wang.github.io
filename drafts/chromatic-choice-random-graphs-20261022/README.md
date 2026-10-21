@@ -15,6 +15,8 @@ The proof splits into two regimes. When the typical colour-class size grows, we 
 
 **Status:** Research manuscript; not yet peer reviewed. LaTeX source revised October 20, 2026; uploaded October 22, 2026.
 
+**AI assistance:** This manuscript was prepared with the assistance of ChatGPT (GPT-6) under the authors' guidance.
+
 ## Search terms
 
 Random graphs; Erdős–Rényi random graph; G(n,p); list colouring; list coloring; choice number; chromatic number; choosability; Alon–Krivelevich–Sudakov conjecture; Krivelevich–Vu method; independent sets; clique partitions; clique packings; Kahn's matching theorem; fractional matchings; probabilistic combinatorics.
