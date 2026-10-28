@@ -7,26 +7,28 @@ combinatorics.
 [Research webpage](https://lanchao-wang.github.io/) ·
 [Publications](https://lanchao-wang.github.io/publications.html)
 
-## Asymptotic equality of chromatic and choice numbers in random graphs
+## The Choice Number of Random Graphs
 
 **Lanchao Wang and Jiasheng Zeng**
 
-A research manuscript proving the Alon–Krivelevich–Sudakov conjecture on **list colouring of random graphs**. Whenever `np → ∞`, we show that the choice number and chromatic number of the binomial random graph `G(n,p)` are asymptotically equal:
+A preprint proving the Alon–Krivelevich–Sudakov conjecture on **list colouring of random graphs**. Whenever `np → ∞`, we show that, with high probability, the choice number and chromatic number of the binomial random graph `G(n,p)` are asymptotically equal:
 
 $
-\operatorname{ch}(G(n,p))=(1+o_{\mathbb P}(1))\chi(G(n,p)).
+\operatorname{ch}(G(n,p))=(1+o(1))\chi(G(n,p)).
 $
 
-The proof handles growing and bounded colour classes separately. It combines uniform independent-set estimates and the Krivelevich–Vu method with a deterministic clique-partition-to-list-colouring proposition proved using random sampling of clique packings and Kahn's matching theorem. First-moment and Janson estimates complete the argument.
+The proof treats growing and bounded independent sets separately. It combines a uniform independent-set estimate and the Krivelevich–Vu method with a deterministic theorem converting a proper colouring with bounded colour classes into a list colouring under a uniform independent-set condition. Random vertex sampling, Kahn's matching theorem, first-moment estimates and Janson's inequality complete the argument.
 
-[Read the draft overview](./drafts/chromatic-choice-random-graphs-20261022/) ·
-[Detailed research note and keywords](./drafts/chromatic-choice-random-graphs-20261022/README.md) ·
-[LaTeX manuscript](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.tex) ·
-[PDF manuscript](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.pdf)
+[arXiv:2610.35003](https://arxiv.org/abs/2610.35003) ·
+[arXiv PDF](https://arxiv.org/pdf/2610.35003) ·
+[Paper overview and version history](./drafts/chromatic-choice-random-graphs-20261022/) ·
+[Version comparison and keywords](./drafts/chromatic-choice-random-graphs-20261022/README.md)
 
-**Status:** Unrefereed research manuscript. Revised October 20, 2026; uploaded October 22, 2026.
+**Status:** arXiv preprint; [v1 submitted October 26, 2026](https://arxiv.org/abs/2610.35003v1), 12 pages. Not yet peer reviewed.
 
-**AI assistance:** This manuscript was prepared with the assistance of ChatGPT (GPT-6) under the authors' guidance.
+**Archived earlier draft:** *Asymptotic equality of chromatic and choice numbers in random graphs*, revised October 20, 2026 and uploaded October 22, 2026. The [archived LaTeX source](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.tex) and [archived PDF (14 pages)](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.pdf) are retained unchanged and are **not the arXiv v1 files**.
+
+**AI assistance:** The arXiv acknowledgements credit GPT-5.6 with developing the large-independent-set proof autonomously and GPT-6 with technical assistance on the authors' bounded-independent-set strategy. The authors wrote the final manuscript and take responsibility for it; see the [arXiv version](https://arxiv.org/html/2610.35003v1) for the full disclosure.
 
 ## Related search terms
 
