@@ -7,34 +7,6 @@ combinatorics.
 [Research webpage](https://lanchao-wang.github.io/) ·
 [Publications](https://lanchao-wang.github.io/publications.html)
 
-## The Choice Number of Random Graphs
-
-**Lanchao Wang and Jiasheng Zeng**
-
-A preprint proving the Alon–Krivelevich–Sudakov conjecture on **list colouring of random graphs**. Whenever `np → ∞`, we show that, with high probability, the choice number and chromatic number of the binomial random graph `G(n,p)` are asymptotically equal:
-
-$
-\operatorname{ch}(G(n,p))=(1+o(1))\chi(G(n,p)).
-$
-
-The proof treats growing and bounded independent sets separately. It combines a uniform independent-set estimate and the Krivelevich–Vu method with a deterministic theorem converting a proper colouring with bounded colour classes into a list colouring under a uniform independent-set condition. Random vertex sampling, Kahn's matching theorem, first-moment estimates and Janson's inequality complete the argument.
-
-[arXiv:2610.35003](https://arxiv.org/abs/2610.35003) ·
-[arXiv PDF](https://arxiv.org/pdf/2610.35003) ·
-[Paper overview and version history](./drafts/chromatic-choice-random-graphs-20261022/) ·
-[Version comparison and keywords](./drafts/chromatic-choice-random-graphs-20261022/README.md)
-
-**Status:** arXiv preprint; [v1 submitted October 26, 2026](https://arxiv.org/abs/2610.35003v1), 12 pages. Not yet peer reviewed.
-
-**Archived earlier draft:** *Asymptotic equality of chromatic and choice numbers in random graphs*, revised October 20, 2026 and uploaded October 22, 2026. The [archived LaTeX source](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.tex) and [archived PDF (14 pages)](./drafts/chromatic-choice-random-graphs-20261022/asymptotic_equality_chromatic_choice_random_graphs.pdf) are retained unchanged and are **not the arXiv v1 files**.
-
-**AI assistance:** The arXiv acknowledgements credit GPT-5.6 with developing the large-independent-set proof autonomously and GPT-6 with technical assistance on the authors' bounded-independent-set strategy. The authors wrote the final manuscript and take responsibility for it; see the [arXiv version](https://arxiv.org/html/2610.35003v1) for the full disclosure.
-
-## Related search terms
-
-List colouring; list coloring; choice number; chromatic number; choosability; random graphs; Erdős–Rényi graph; G(n,p); Alon–Krivelevich–Sudakov conjecture; clique partitions; Kahn's matching theorem.
-
----
 
 ## Current research draft
 
